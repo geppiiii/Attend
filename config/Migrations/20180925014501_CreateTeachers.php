@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class CreateIccards extends AbstractMigration
+class CreateTeachers extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,12 +12,12 @@ class CreateIccards extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('iccards');
-        $table->addColumn('ic_number','string',
+        $table = $this->table('teachers');
+        $table->addColumn('teacher_name','string',
         [
             'null' => false
         ]);
-        $table->addColumn('student_number','string',
+        $table->addColumn('ic_number','string',
         [
             'null' => false
         ]);

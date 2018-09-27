@@ -2,9 +2,9 @@
 use Migrations\AbstractSeed;
 
 /**
- * Iccards seed.
+ * StudentLessons seed.
  */
-class IccardsSeed extends AbstractSeed
+class StudentLessonsSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -20,20 +20,17 @@ class IccardsSeed extends AbstractSeed
     {
         $data = [
             [
-                'ic_number' => 'test001',
                 'student_number' => '0000001'
             ],
             [
-                'ic_number' => 'test002',
                 'student_number' => '0000002'
             ],
             [
-                'ic_number' => 'test003',
                 'student_number' => '0000003'
             ]
         ];
 
-        $table = $this->table('iccards');
+        $table = $this->table('student_lessons');
         $table->insert($data)->save();
     }
 }

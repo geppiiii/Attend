@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class CreateStudents extends AbstractMigration
+class CreateAttends extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,45 +12,32 @@ class CreateStudents extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('students');
+        $table = $this->table('attends');
         //学籍番号
         $table->addColumn('student_number','string',
         [
             'null' => false
         ]);
-        //学科名
-        $table->addColumn('department','string',
+        $table->addColumn('attend_time','time',
         [
             'null' => false
         ]);
-        //出席番号
-        $table->addColumn('attendance_number','integer',
+        $table->addColumn('attend_state','integer',
         [
             'null' => false
         ]);
-        //icカードナンバー
-        $table->addColumn('ic_number','string',
+        $table->addColumn('leave_time','time',
         [
             'null' => false
         ]);
-        //出席管理ナンバー
-        $table->addColumn('attend_number','integer',
+        $table->addColumn('leave_state','integer',
         [
             'null' => false
         ]);
-        $table->addColumn('student_name','string',
+        //最終判断
+        $table->addColumn('all_situation','integer',
         [
             'null' => false
-        ]);
-        //学年
-        $table->addColumn('year','integer',
-        [
-            'null' => false
-        ]);
-        //クラス
-        $table->addColumn('class','string',
-        [
-            'null' => true
         ]);
         $table->create();
     }
