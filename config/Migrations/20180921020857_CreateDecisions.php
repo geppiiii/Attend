@@ -13,10 +13,12 @@ class CreateDecisions extends AbstractMigration
     public function change()
     {
         $table = $this->table('decisions',['id' => false, 'primary_key' => ['judge_number']]);
+        //判断番号
         $table->addColumn('judge_number','integer',
         [
             'null' => false
         ]);
+        //判断理由
         $table->addColumn('description','string',
         [
             'null' => true

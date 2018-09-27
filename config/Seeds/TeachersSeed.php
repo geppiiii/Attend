@@ -2,9 +2,9 @@
 use Migrations\AbstractSeed;
 
 /**
- * Absences seed.
+ * Teachers seed.
  */
-class AbsencesSeed extends AbstractSeed
+class TeachersSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -20,13 +20,12 @@ class AbsencesSeed extends AbstractSeed
     {
         $data = [
             [
-                'student_number' => '0000001',
-                'absence_date'=> '2018-11-11',
-                'reason' => 'インターンシップに行くため'
+                'teacher_name' => 'admin',
+                'ic_number' => '0001'
             ]
         ];
 
-        $table = $this->table('absences');
+        $table = $this->table('teachers');
         $table->insert($data)->save();
     }
 }

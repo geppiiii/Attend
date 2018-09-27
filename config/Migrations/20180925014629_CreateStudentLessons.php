@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class CreateAbsences extends AbstractMigration
+class CreateStudentLessons extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,21 +12,21 @@ class CreateAbsences extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('absences');
+        $table = $this->table('student_lessons');
         //学籍番号
         $table->addColumn('student_number','string',
         [
             'null' => false
         ]);
-        //欠席日付
-        $table->addColumn('absence_date','date',
+        //遅刻カウント（最初は０）
+        $table->addColumn('lete','integer',
         [
-            'null' => true
+            'default' => 0
         ]);
-        //理由番号
-        $table->addColumn('reason','string',
+        //欠席カウント(最初は０)
+        $table->addColumn('clerk','integer',
         [
-            'null' => true
+            'default' => 0
         ]);
         $table->create();
     }
