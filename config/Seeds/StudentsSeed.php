@@ -25,9 +25,9 @@ class StudentsSeed extends AbstractSeed
                 'department' => '情報工学科',
                 'attendance_number' => 1,
                 'student_name' => 'あああ',
-                'attend_number' => '01',
+                'attend_number' => 1,
                 'department' => '情報工学科',
-                'year' => '3',
+                'year' => 3,
                 'class' => null
             ],
             [
@@ -36,9 +36,9 @@ class StudentsSeed extends AbstractSeed
                 'department' => '情報システム専攻科',
                 'attendance_number' => 10,
                 'student_name' => 'いいい',
-                'attend_number' => '02',
+                'attend_number' => 2,
                 'department' => '情報工学科',
-                'year' => '3',
+                'year' => 3,
                 'class' => 'A'
             ],
             [
@@ -47,9 +47,9 @@ class StudentsSeed extends AbstractSeed
                 'department' => '情報システム科',
                 'attendance_number' => 20,
                 'student_name' => 'ううう',
-                'attend_number' => '03',
+                'attend_number' => 3,
                 'department' => '情報工学科',
-                'year' => '3',
+                'year' => 3,
                 'class' => 'B'
             ]
         ];
