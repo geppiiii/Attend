@@ -13,7 +13,11 @@ class CreateTeachers extends AbstractMigration
     public function change()
     {
         $table = $this->table('teachers');
-        $table->addColumn('teacher_name','string',
+        $table->addColumn('username','string',
+        [
+            'null' => false
+        ]);
+        $table->addColumn('password','string',
         [
             'null' => false
         ]);

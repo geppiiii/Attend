@@ -20,7 +20,8 @@ class TeachersSeed extends AbstractSeed
     {
         $data = [
             [
-                'teacher_name' => 'admin',
+                'username' => 'admin',
+                'password' => '0001',
                 'ic_number' => '0001'
             ]
         ];
