@@ -23,10 +23,9 @@ class StudentsSeed extends AbstractSeed
                 'student_number' => '0000001',
                 'ic_number' => 'admin1',
                 'department' => '情報工学科',
+                // 出席番号
                 'attendance_number' => 1,
                 'student_name' => 'あああ',
-                'attend_number' => 1,
-                'department' => '情報工学科',
                 'year' => 3,
                 'class' => null
             ],
@@ -34,23 +33,41 @@ class StudentsSeed extends AbstractSeed
                 'student_number' => '0000002',
                 'ic_number' => 'admin2',
                 'department' => '情報システム専攻科',
+                // 出席番号
                 'attendance_number' => 10,
                 'student_name' => 'いいい',
-                'attend_number' => 2,
-                'department' => '情報工学科',
                 'year' => 3,
-                'class' => 'A'
+                'class' => null
             ],
             [
                 'student_number' => '0000003',
                 'ic_number' => 'admin3',
-                'department' => '情報システム科',
+                'department' => '情報システム科A',
+                // 出席番号
                 'attendance_number' => 20,
                 'student_name' => 'ううう',
-                'attend_number' => 3,
-                'department' => '情報工学科',
+                'year' => 3,
+                'class' => 'A'
+            ],
+            [
+                'student_number' => '0000004',
+                'ic_number' => 'admin4',
+                'department' => '情報システム科B',
+                // 出席番号
+                'attendance_number' => 20,
+                'student_name' => 'えええ',
                 'year' => 3,
                 'class' => 'B'
+            ],
+            [
+                'student_number' => '0000005',
+                'ic_number' => 'admin4',
+                'department' => '情報工学科',
+                // 出席番号
+                'attendance_number' => 21,
+                'student_name' => 'おおお',
+                'year' => 3,
+                'class' => null
             ]
         ];
 
