@@ -24,12 +24,21 @@ class ApisController extends AppController {
 
     public function add () {
         $this->autoRender = false;
-        $data = null;
-        if ($this->request->is('post')) {
-            $datas = $this->request->data['id'];
-            $data = ["NORMAL_REQUEST_CODE" => $datas];
-        }
-        $this->response->body(json_encode($data));
+        //if ($this->request->is('post')) {
+        $datas = $this->request->getData('id');
+        $datas = json_decode($datas);
+        print($datas);
+        print($this->request->getData('id'));
+        //$json_string = file_get_contents('php://input');
+        //$datas = $json_string['id'];
+        //$data = ["NORMAL_REQUEST_CODE" => $datas['id']];
+        //}
+        //$this->response->body(json_encode($data));
+        //$this->set(compact('json'));
+		//$this->set('_serialize', 'json');
 
+        //$this->autoRender = false;
+        //$data = ["NORMAL_REQUEST_CODE" => "200"];
+        //$this->response->body(json_encode($data));
     }
 }

@@ -18,6 +18,11 @@ class CreateStudents extends AbstractMigration
         [
             'null' => false
         ]);
+        //icカードナンバー
+        $table->addColumn('ic_number','string',
+        [
+            'null' => false
+        ]);
         //学科名
         $table->addColumn('department','string',
         [
@@ -25,16 +30,6 @@ class CreateStudents extends AbstractMigration
         ]);
         //出席番号
         $table->addColumn('attendance_number','integer',
-        [
-            'null' => false
-        ]);
-        //icカードナンバー
-        $table->addColumn('ic_number','string',
-        [
-            'null' => false
-        ]);
-        //出席管理ナンバー
-        $table->addColumn('attend_number','integer',
         [
             'null' => false
         ]);

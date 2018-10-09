@@ -18,18 +18,22 @@ class CreateAttends extends AbstractMigration
         [
             'null' => false
         ]);
+        // 出席時間
         $table->addColumn('attend_time','time',
         [
-            'null' => false
+            'default' => '00:00:00'
         ]);
+        // 間に合ったかどうか
         $table->addColumn('attend_state','integer',
         [
             'null' => false
         ]);
+        // 帰りの時間
         $table->addColumn('leave_time','time',
         [
-            'null' => false
+            'default' => '00:00:00'
         ]);
+        // 帰りの時間が正規の時間かどうか
         $table->addColumn('leave_state','integer',
         [
             'null' => false
