@@ -24,7 +24,7 @@ class CreateStudents extends AbstractMigration
             'null' => false
         ]);
         //学科名
-        $table->addColumn('department','string',
+        $table->addColumn('department','integer',
         [
             'null' => false
         ]);
