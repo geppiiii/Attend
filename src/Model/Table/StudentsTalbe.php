@@ -7,7 +7,7 @@ use Cake\ORM\Table;
 
 class StudentsTable extends Table{
 
-  public  function  initialize(array $config) { 
+  public  function  initialize(array $config) {
 
     $this->belongsTo('Absences')
          ->setForeignKey('student_number');
