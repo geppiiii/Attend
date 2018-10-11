@@ -23,7 +23,7 @@ class CreateStudentLessons extends AbstractMigration
         [
             'default' => 0
         ]);
-        //欠席カウント(最初は０)
+        //欠課カウント(最初は０)
         $table->addColumn('clerk','integer',
         [
             'default' => 0
