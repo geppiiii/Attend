@@ -21,10 +21,13 @@ class CreateTeachers extends AbstractMigration
         [
             'null' => false
         ]);
-        $table->addColumn('ic_number','string',
+        $table->addColumn('role','string',
         [
             'null' => false
         ]);
+        // $table->addColumn('role','string');
+        $table->addColumn('created','datetime');
+        $table->addColumn('modified','timestamp');
         $table->create();
     }
 }
