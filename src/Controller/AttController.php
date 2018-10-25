@@ -34,5 +34,8 @@ class AttController extends AppController{
         $this->set('name',$name);
 
     }
+    public function monthlyOutput(){
+
+    }
 }
 ?>

@@ -81,16 +81,12 @@ class LessonController extends AppController{
 
 	public function homeroom(){
 		$this->Attend = TableRegistry::get('Attends');
-		//欠席じゃなくてattend_timeに時間が入力されてないひと  ,['conditions'=>['attend_time'=> 空欄の人 ]]
-		$attend = $this->Attend->find('all');
+		//欠席じゃなくてattend_timeに時間が入力されてないひと
+		$attend = $this->Attend->find('all',['conditions'=>['attend_time'=> '00:00:00']]);
 		$this->set('attend',$attend);
 		date_default_timezone_set('Asia/Tokyo');
 		echo date("Y/m/d h:i:s");
 		//$this->set('entity',$this->Attend->newEntity());
-	}
-	//選択された値を保存
-	public function infoinput(){
-		echo "string";
 	}
 
 }

@@ -23,11 +23,11 @@
             <label for="inputpassword">パスワード</label>
             <input type="password" class="form-control" id="inputpassword" placeholder="パスワード">
         </div>
-        <a href="home" class="btn btn-primary btn-lg">ログイン
+        <a href="att/home" class="btn btn-primary btn-lg">ログイン
         </a>
     </form>
 </div>
-    
+
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

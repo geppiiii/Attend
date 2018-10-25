@@ -21,25 +21,25 @@
                 <a class="nav-link" href="#">HR確認画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="lesson_confirm.html">授業中確認画面</a>
+                <a class="nav-link" href="lessonConfirm">授業中確認画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="daily_output.html">日報出力画面</a>
+                <a class="nav-link" href="dailyOutput">日報出力画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="monthly-output.html">月報出力画面</a>
+                <a class="nav-link" href="monthlyOutput">月報出力画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="registry-student.html">生徒登録画面</a>
+                <a class="nav-link" href="registryStudent">生徒登録画面</a>
             </li>
             <li class="nav-item mr-md-0">
-                <a class="nav-link" href="index.html">ログアウト</a>   
+                <a class="nav-link" href="index">ログアウト</a>
             </li>
             </ul>
-            
+
         </div>
     </nav>
-    
+
     <div class="container mt-md-3">
         <div class="container">
             <h4>遅刻者一覧</h4>
