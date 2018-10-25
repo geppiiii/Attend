@@ -22,7 +22,8 @@ class TeachersSeed extends AbstractSeed
             [
                 'username' => 'admin',
                 'password' => '0001',
-                'ic_number' => '0001'
+                'role' => '',
+                'created' => '2018-11-11 7:00:00'
             ]
         ];
 
