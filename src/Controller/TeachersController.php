@@ -18,9 +18,8 @@ class TeachersController extends AppController
         $this->Auth->allow(['add', 'logout']);
     }
 
-     public function index()
-     {
-        print(realpath(TMP));
+    public function index()
+    {
         $this->set('teacher', $this->Teachers->find('all'));
     }
 
@@ -56,10 +55,9 @@ class TeachersController extends AppController
                 echo $obj->password;
                 if(strcmp($_POST['password'],$obj->password) == 0){
                     $session->write('id',$obj->id);
-                    echo 'true';
-                    return $this->redirect('/att/home');
+
                 }else{
-                    echo 'false';
+                    //echo 'false';
                 }
             }
         }
@@ -68,13 +66,13 @@ class TeachersController extends AppController
 
     public function logout()
     {
-        return $this->redirect($this->Auth->logout());
+        //return $this->redirect($this->Auth->logout());
     }
     public function qaz(){
 
     }
 
-    public function download ( $id = "7" ){
+    public function download ( $id = "8" ){
  
         // 入出力の情報設定
         $driPath    = realpath(TMP) . "/excel/";
@@ -127,7 +125,7 @@ class TeachersController extends AppController
         
         // 保存
         $writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
-        $writer->save(realpath(TMP) . '/excel/出席トレース2.xlsx');
+        $writer->save(realpath(TMP) . '/excel/出席トレース3.xlsx');
         $this->redirect(['action' => 'qaz']);
 
     }
