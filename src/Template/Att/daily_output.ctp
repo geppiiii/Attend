@@ -18,25 +18,25 @@
         <div class="collapse navbar-collapse" id="navbarsExample02">
             <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="home.html">HR確認画面</a>
+                <a class="nav-link" href="home">HR確認画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="lesson-confirm.html">授業中確認画面</a>
+                <a class="nav-link" href="lessonConfirm">授業中確認画面</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="#">日報出力画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="monthly-output.html">月報出力画面</a>
+                <a class="nav-link" href="monthlyOutput">月報出力画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="registry-student.html">生徒登録画面</a>
+                <a class="nav-link" href="registryStudent">生徒登録画面</a>
             </li>
             <li class="nav-item mr-md-0">
-                <a class="nav-link" href="index.html">ログアウト</a>   
+                <a class="nav-link" href="index.html">ログアウト</a>
             </li>
             </ul>
-            
+
         </div>
     </nav>
 
@@ -57,7 +57,7 @@
                 <br>
                 <?php endforeach;?>
             </div>
-        </div>        
+        </div>
         <div class="row">
             <div class="col-md-4">
                 <h4>欠席者</h4>

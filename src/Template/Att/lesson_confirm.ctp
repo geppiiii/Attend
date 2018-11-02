@@ -18,28 +18,28 @@
         <div class="collapse navbar-collapse" id="navbarsExample02">
             <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="home.html">HR確認画面</a>
+                <a class="nav-link" href="home">HR確認画面</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="#">授業中確認画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="daily-output.html">日報出力画面</a>
+                <a class="nav-link" href="dailyOutput">日報出力画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="monthly-output.html">月報出力画面</a>
+                <a class="nav-link" href="monthlyOutput">月報出力画面</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="registry-student.html">生徒登録画面</a>
+                <a class="nav-link" href="registryStudent">生徒登録画面</a>
             </li>
             <li class="nav-item mr-md-0">
-                <a class="nav-link" href="index.html">ログアウト</a>   
+                <a class="nav-link" href="index">ログアウト</a>
             </li>
             </ul>
-            
+
         </div>
     </nav>
-    
+
     <div class="container text-center" style="margin-top:15%">
         <form action="" method="post">
             <table>
@@ -55,7 +55,7 @@
             </table>
         </form>
     </div>
-    
+
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
