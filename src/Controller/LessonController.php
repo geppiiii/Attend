@@ -43,6 +43,7 @@ class LessonController extends AppController{
 		}
 	}
 
+
 	public function _lessonlate($lesson){
 		foreach ($lesson as $key) {
 			//送られてきた学籍番号に該当する人の検索
