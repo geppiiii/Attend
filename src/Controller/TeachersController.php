@@ -55,6 +55,7 @@ class TeachersController extends AppController
                 echo $obj->password;
                 if(strcmp($_POST['password'],$obj->password) == 0){
                     $session->write('id',$obj->id);
+                    return $this->redirect('/att/home');
 
                 }else{
                     //echo 'false';

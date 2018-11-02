@@ -20,13 +20,20 @@ class StudentLessonsSeed extends AbstractSeed
     {
         $data = [
             [
-                'student_number' => '0000001'
+                'student_number' => '0000001',
+                'grade' => '1',
+                'month' => date('m')
             ],
             [
-                'student_number' => '0000002'
+                'student_number' => '0000002',
+                'grade' => '1',
+                'month' => date('m')
             ],
             [
-                'student_number' => '0000003'
+                'student_number' => '0000003',
+                'grade' => '1',
+                'month' => date('m')
+
             ]
         ];
 

@@ -8,6 +8,9 @@ class LessonController extends AppController{
 	public function index(){
 		$this->viewBuilder()->autoLayout(false);
 	}
+	public function initialize(){
+
+    }
 
 	public function editRecord(){
 		//DB接続
