@@ -43,6 +43,7 @@ class CreateAttends extends AbstractMigration
         [
             'null' => false
         ]);
+        $table->addColumn('created', 'datetime');
         $table->create();
     }
 }

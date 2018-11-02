@@ -28,6 +28,8 @@ class CreateStudentLessons extends AbstractMigration
         [
             'default' => 0
         ]);
+        $table->addColumn('grade','integer');
+        $table->addColumn('month','integer');
         $table->create();
     }
 }

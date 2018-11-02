@@ -25,7 +25,8 @@ class AttendsSeed extends AbstractSeed
                 'attend_state' => 3,
                 'leave_time' => '',
                 'leave_state' => 3,
-                'all_situation' => 3
+                'all_situation' => 3,
+                'created' => '2018-11-11 7:00:00'
             ],
             [
                 'student_number' => '0000002',
@@ -33,7 +34,8 @@ class AttendsSeed extends AbstractSeed
                 'attend_state' => 2,
                 'leave_time' => '17:05:00',
                 'leave_state' => '1',
-                'all_situation' => 2
+                'all_situation' => 2,
+                'created' => '2018-11-11 7:00:00'
             ],
             [
                 'student_number' => '0000003',
@@ -41,7 +43,8 @@ class AttendsSeed extends AbstractSeed
                 'attend_state' => 4,
                 'leave_time' => '17:05:00',
                 'leave_state' => 1,
-                'all_situation' => 1
+                'all_situation' => 1,
+                'created' => '2018-11-11 7:00:00'
             ],
             [
                 'student_number' => '0000004',
@@ -49,7 +52,8 @@ class AttendsSeed extends AbstractSeed
                 'attend_state' => 1,
                 'leave_time' => '15:20:00',
                 'leave_state' => 3,
-                'all_situation' => 3
+                'all_situation' => 3,
+                'created' => '2018-11-11 7:00:00'
             ],
             [
                 'student_number' => '0000005',
@@ -57,7 +61,8 @@ class AttendsSeed extends AbstractSeed
                 'attend_state' => 1,
                 'leave_time' => '17:05:00',
                 'leave_state' => 1,
-                'all_situation' => 1
+                'all_situation' => 1,
+                'created' => '2018-11-11 7:00:00'
             ]
 
         ];
