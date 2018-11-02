@@ -38,7 +38,8 @@ class LessonController extends AppController{
 				$this->_kekkaupdate($num,$kekka);
 			}
 		}
-	
+	}
+
 
 	public function _lessonlate($lesson){
 		foreach ($lesson as $key) {
