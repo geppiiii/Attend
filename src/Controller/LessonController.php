@@ -8,12 +8,10 @@ class LessonController extends AppController{
 	public function index(){
 		$this->viewBuilder()->autoLayout(false);
 	}
-	public function initialize(){
-
-    }
 
 	public function editRecord(){
 		//DB接続
+		$this->Students = TableRegistry::get('Students');
 		$this->Student_Lesson = TableRegistry::get('Student_Lessons');
 		//あたいの受け取り
 		if(isset($this->request->data['tikoku'])){
@@ -27,6 +25,9 @@ class LessonController extends AppController{
 		}
 		$end = $this->Student_Lesson->find('all');
 		$this->set('lesson',$end);
+		$student = $this->Students->find('all');
+		$this->set('student',$student);
+		$this->set('entity',$this->Student_Lesson->newEntity());
 	}
 
 	public function _lessonclerk($kekka){
@@ -42,7 +43,6 @@ class LessonController extends AppController{
 			}
 		}
 	}
-
 
 	public function _lessonlate($lesson){
 		foreach ($lesson as $key) {
@@ -85,12 +85,32 @@ class LessonController extends AppController{
 
 	public function homeroom(){
 		$this->Attend = TableRegistry::get('Attends');
-		//欠席じゃなくてattend_timeに時間が入力されてないひと
-		$attend = $this->Attend->find('all',['conditions'=>['attend_time'=> '00:00:00']]);
+		$this->Students = TableRegistry::get('Students');
+		$this->set('entity',$this->Attend->newEntity());
+		//欠席じゃなくてattend_timeに時間が入力されてないひと,['conditions'=>['attend_time'=> 空欄の人 ]]
+		$attend = $this->Attend->find('all',['conditions'=>['attend_state <>'=> "1"]]);
 		$this->set('attend',$attend);
-		date_default_timezone_set('Asia/Tokyo');
-		echo date("Y/m/d h:i:s");
-		//$this->set('entity',$this->Attend->newEntity());
+		$student = $this->Students->find('all');
+		$this->set('student',$student);
+	}
+
+
+	public function updateRecord(){
+		$this->Attend = TableRegistry::get('Attends');
+		if($this->request->is('post')){
+			$entity = $this->Attend->find('all',['conditions'=>['attend_state <>'=> "1"]]);
+            $this->Attend->patchEntities($entity, $this->request->data);
+            $this->Attend->save($entity);
+			$this->redirect(['action' => "homeroom"]);
+		}
+	}
+
+	public function updateHomeroom(){
+
+	}
+	//選択された値を保存
+	public function infoinput(){
+		echo "string";
 	}
 
 }
