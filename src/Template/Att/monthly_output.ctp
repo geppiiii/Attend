@@ -9,36 +9,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">出席管理システム</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExample02">
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="home">HR確認画面</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="lessonConfirm">授業中確認画面</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="dailyOutput">日報出力画面</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">月報出力画面</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="registryStudent">生徒登録画面</a>
-            </li>
-            <li class="nav-item mr-md-0">
-                <a class="nav-link" href="../Teachers/login">ログアウト</a>   
-            </li>
-            </ul>
-
-        </div>
-    </nav>
 
     <div class="container mt-md-3">
         <button type="submit text-center" class="btn btn-primary">月報出力を行う</button>
