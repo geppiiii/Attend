@@ -45,7 +45,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div class="collapse navbar-collapse" id="navbarsExample02">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="homeroom">HR確認画面</a>
+                    <a class="nav-link" href="home">HR確認画面</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="lessonconf">授業中確認画面</a>
