@@ -7,7 +7,7 @@
   </head>
   <body>
   <!-- 出席以外の表示 -->
-  <?=$this->Form->create($entity,['url'=>['action'=>'updateRecord']]) ?>
+  <?=$this->Form->create($entity,['url'=>['action'=>'updaterecord']]) ?>
     <div class="container-fluid" style="margin-top:3%">
       <!-- カラム名 -->
       <div clas=" row">
@@ -25,6 +25,7 @@
               <!-- 生徒学籍番号 -->
               <div class="col-md-4">
                 <?=$obj2->student_number?>
+                <input type="hidden" name='aaa[]' value=<?=$obj2->student_number?>>
               </div>
               <!-- 生徒名前 -->
               <div class="col-md-4">
@@ -33,12 +34,10 @@
               <!-- 出席状態 -->
               <div class="form-row align-items-center">
                 <div class="col-auto my-1">
-                  <select class="custom-select " id="inlineFormCustomSelect">
+                  <select class="custom-select " id="inlineFormCustomSelect" name="conf[]">
                     <option selected value="2">遅刻</option>
-                    <option value="3">早退</option>
                     <option value="4">遅延</option>
                     <option value="1">名札忘れ</option>
-                    <option value="7">届け出欠席</option>
                   </select>
                 </div>
               </div>
