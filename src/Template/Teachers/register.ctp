@@ -30,7 +30,7 @@
 
         <div class="row">
             <button class="<?= $btn_class1 ?>" type="submit">登録する</button><br>
-            <a class="<?= $btn_class1 ?>" href="<?= $url_c ?>/index">ログイン画面に戻る</a>
+            <a class="<?= $btn_class1 ?>" href="<?= $url_c ?>/login">ログイン画面に戻る</a>
         </div>
 
       </form>

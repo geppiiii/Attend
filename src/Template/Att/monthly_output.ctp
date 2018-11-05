@@ -33,7 +33,7 @@
                 <a class="nav-link" href="registryStudent">生徒登録画面</a>
             </li>
             <li class="nav-item mr-md-0">
-                <a class="nav-link" href="index">ログアウト</a>   
+                <a class="nav-link" href="../Teachers/login">ログアウト</a>   
             </li>
             </ul>
 
