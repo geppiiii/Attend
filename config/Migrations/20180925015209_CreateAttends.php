@@ -34,15 +34,9 @@ class CreateAttends extends AbstractMigration
             'default' => '00:00:00'
         ]);
         // 帰りの時間が正規の時間かどうか
-        $table->addColumn('leave_state','integer',
-        [
-            'null' => false
-        ]);
+        $table->addColumn('leave_state','integer');
         //最終判断
-        $table->addColumn('all_situation','integer',
-        [
-            'null' => false
-        ]);
+        $table->addColumn('all_situation','integer');
         $table->addColumn('created', 'date');
         $table->create();
     }
