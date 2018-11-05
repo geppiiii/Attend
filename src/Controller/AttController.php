@@ -8,7 +8,6 @@ class AttController extends AppController{
         //$this->set('msg','Hello/index');
         //$this->set('footer','Hello\footer2');
 
-
     }
     public function index(){
     }
@@ -19,22 +18,11 @@ class AttController extends AppController{
 		$this->Students = TableRegistry::get('Students');
 		$this->set('entity',$this->Attend->newEntity());
 		//欠席じゃなくてattend_timeに時間が入力されてないひと,['conditions'=>['attend_time'=> 空欄の人 ]]
-		$attend = $this->Attend->find('all',['conditions'=>['attend_state <>'=> "1"]]);
+		$attend = $this->Attend->find('all',['conditions'=>['attend_time '=> "00:00:00"]]);
 		$this->set('attend',$attend);
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
-    }
-
-    //HR確認画面＿更新タップ時処理
-    public function updateRecord(){
-		$this->Attend = TableRegistry::get('Attends');
-		if($this->request->is('post')){
-			$entity = $this->Attend->find('all',['conditions'=>['attend_state <>'=> "1"]]);
-            $this->Attend->patchEntities($entity, $this->request->data);
-            $this->Attend->save($entity);
-			$this->redirect(['action' => "homeroom"]);
-		}
-    }
+	}
 
     //授業中確認画面
     public function lessonconf(){
@@ -133,6 +121,41 @@ class AttController extends AppController{
         $name = $this->students->find('all');
         $this->set('name',$name);
 
-    }
+	}
+	
+	public function monthlyOutput(){
+	}
+
+	public function updaterecord(){
+		//DB接続
+		$this->Attend = TableRegistry::get('Attends');
+		//あたいの受け取り
+		$ddd = $this->request->data['conf'];
+		$num = $this->request->data['aaa'];
+		//受け取った値を配列へ変換
+		foreach ($num as $obj) {
+			$arys[] = $obj;
+		}
+		foreach ($ddd as $obj) {
+			$aryc[] = $obj;
+		}
+		//配列を繰り返し処理を行う
+		for($i = 0;$i<count($arys); $i++){
+			$this->_homeup($arys[$i],$aryc[$i]);
+		}
+	}
+
+	//選択された値を保存
+	public function _homeup($student,$joutai){
+		//DBへ接続
+		$Attend = TableRegistry::get('Attends');
+		//渡された学籍番号を検索
+		$data = $Attend->get($student);
+		//stateを渡された値へ変更
+		$data->attend_state = $joutai;
+		//変更された値を保存
+		$Attend->save($data);
+		return $this->redirect('/att/home');
+	}
 }
 ?>
