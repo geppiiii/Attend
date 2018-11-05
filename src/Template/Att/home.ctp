@@ -1,109 +1,70 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<title>出席管理システム</title>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-</head>
-
-<body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">出席管理システム</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarsExample02">
-            <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">HR確認画面</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="lessonConfirm">授業中確認画面</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="dailyOutput">日報出力画面</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="monthlyOutput">月報出力画面</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="registryStudent">生徒登録画面</a>
-            </li>
-            <li class="nav-item mr-md-0">
-                <a class="nav-link" href="index">ログアウト</a>
-            </li>
-            </ul>
-
-        </div>
-    </nav>
-
-    <div class="container mt-md-3">
-        <div class="container">
-            <h4>遅刻者一覧</h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <p>名前</p>
+<html long="ja">
+  <head>
+    <meta http-equiv="content-yape" content="text/html; charset=UTF-8">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+  </head>
+  <body>
+  <!-- 出席以外の表示 -->
+  <?=$this->Form->create($entity,['url'=>['action'=>'updateRecord']]) ?>
+    <div class="container-fluid" style="margin-top:3%">
+      <!-- カラム名 -->
+      <div clas=" row">
+        <table>
+          <div class="col-md-4"><th>学籍番号</th></div>
+          <div class="col-md-4"><th>名前</th></div>
+          <div class="col-md-4"><th>出席状態</th></div>
+        </table>
+      </div>
+      <!-- カラム値 -->
+      <?php foreach ($student as $obj1): ?>
+        <?php foreach($attend as $obj2): ?>
+          <?php if($obj1->student_number == $obj2->student_number): ?>
+            <div class="row m-1">
+              <!-- 生徒学籍番号 -->
+              <div class="col-md-4">
+                <?=$obj2->student_number?>
+              </div>
+              <!-- 生徒名前 -->
+              <div class="col-md-4">
+                <?=$obj1->student_name?>
+              </div>
+              <!-- 出席状態 -->
+              <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                  <select class="custom-select " id="inlineFormCustomSelect">
+                    <option selected value="2">遅刻</option>
+                    <option value="3">早退</option>
+                    <option value="4">遅延</option>
+                    <option value="1">名札忘れ</option>
+                    <option value="7">届け出欠席</option>
+                  </select>
                 </div>
-                <div class="col-md-6 dropdown dropright">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">出席状況
-                    <span class="caret"></span>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <a class="dropdown-item" value="遅刻">遅刻</a>
-                        <a class="dropdown-item" value="遅延">遅延</a>
-                        <a class="dropdown-item" value="公欠">公欠</a>
-                        <a class="dropdown-item" value="名札忘れ">名札忘れ</a>
-                        <a class="dropdown-item" value="届け出欠席">届け出欠席</a>
-                    </div>
-                </div>
+              </div>
             </div>
-        </div>
-        <div class="container">
-            <h4>本日の授業時間</h4>
-            <div class="row">
-            <div class="col-md-5 dropdown dropright">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">１限
-                    <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <a class="dropdown-item" value="１限">１限</a>
-                    <a class="dropdown-item" value="２限">２限</a>
-                    <a class="dropdown-item" value="３限">３限</a>
-                    <a class="dropdown-item" value="４限">４限</a>
-                </div>
-            </div>
-            <div class="col-md-2 container"><p>から</p></div>
-            <div class="col-md-5 dropdown dropright">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">３限
-                    <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <a class="dropdown-item" value="１限">１限</a>
-                    <a class="dropdown-item" value="２限">２限</a>
-                    <a class="dropdown-item" value="３限">３限</a>
-                    <a class="dropdown-item" value="４限">４限</a>
-                </div>
-            </div>
-            </div>
-            <button type="submit text-center" class="btn btn-primary">確定</button>
-        </div>
+            <hr class="GRAY">
+          <?php endif; ?>
+        <?php endforeach; ?>
+      <?php endforeach; ?>
+
+      <button class="btn bg-primary" type="submit">更新</button>
+      <?=$this->Form->end(); ?>
+
+      </script>
     </div>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
-<script>
-    $(function(){
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+    <script>
+      $(function(){
         $('.dropdown-menu .dropdown-item').click(function(){
-            var visibleItem = $('.dropdown-toggle', $(this).closest('.dropdown'));
-            visibleItem.text($(this).attr('value'));
+          var visibleItem = $('.dropdown-toggle', $(this).closest('.dropdown'));
+          visibleItem.text($(this).attr('value'));
         });
-    });
-</script>
-</body>
-
+      });
+    </script>
+  </body>
 </html>
