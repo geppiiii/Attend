@@ -124,7 +124,14 @@ class AttController extends AppController{
 	}
 	
 	public function monthlyOutput(){
-	}
+    }
+    public function nextDailyChange(){
+        $this->attends = TableRegistry::get('attends');
+        $this->students = TableRegistry::get('students');
+        $name = $this->students->find('all');
+        $this->set('name',$name);
+
+    }
 
 	public function updaterecord(){
 		//DB接続
