@@ -1,14 +1,19 @@
 <?php
 namespace App\Controller;
+use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
 class AttController extends AppController{
     public function initialize(){
-        //$this->viewBuilder()->layout('Hello');
-        //$this->set('msg','Hello/index');
-        //$this->set('footer','Hello\footer2');
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+	}
+	
+	public function beforeFilter(Event $event) {
+  		parent::beforeFilter($event);
+  		$this->Auth->allow();
+	}
 
-    }
     public function index(){
     }
 

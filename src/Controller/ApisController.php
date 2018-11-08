@@ -10,6 +10,7 @@ class ApisController extends AppController {
     
     public function initialize () {
         parent::initialize();
+        $this->Auth->allow(['add']);
         $this->loadComponent('RequestHandler');
         
         $this->response->charset('UTF-8');
@@ -36,7 +37,6 @@ class ApisController extends AppController {
         $data = [$request_code => $request_number];
         $attendsTable = TableRegistry::get('attends');
         $studentsTable = TableRegistry::get('students');
-
         if ($this->request->is('post')) {
             $request_code = "NORMAL_REQUEST_CODE";
             $request = json_decode(file_get_contents('php://input'), true);
@@ -52,8 +52,11 @@ class ApisController extends AppController {
             $atte_result = $attendsTable->find()
             ->where(['student_number'=>$student_id])
             ->where(['created'=>$today]);
-            $request_number = empty($atte_result);
-            if (empty($atte_result)) {
+            foreach($atte_result as $result) {
+                $atte_id = $result->id;
+            }
+
+            if (empty($atte_id)) {
                 $attend = $attendsTable->newEntity();
                 $attend->student_number = $student_id;
                 $attend->attend_time = $c_time;
@@ -65,10 +68,6 @@ class ApisController extends AppController {
                 $attend->created = $today;
                 $attendsTable->save($attend);
             } else {
-                foreach ($atte_result as $result) {
-                    $atte_id = $result->id;
-                }
-                //$attend = $attendsTable->get(['student_number'=>$student_id, 'created'=>'2018-11-05T00:00:00']);
                 $attend = $attendsTable->get($atte_id);
                 $attend->leave_time = $c_time;
                 if ($request_judge) {
@@ -78,8 +77,8 @@ class ApisController extends AppController {
                 }
                 $attend->all_situation = 1;
                 $attendsTable->save($attend);
-                $request_number = $attend;
             }
+            $request_number = 200;
             $data = [$request_code => $request_number];
         }
         $this->response->body(json_encode($data));
