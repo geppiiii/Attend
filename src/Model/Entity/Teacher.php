@@ -30,7 +30,8 @@ class Teacher extends Entity
         'password' => true,
         'role' => true,
         'created' => true,
-        'modified' => true
+        'modified' => true,
+        'ic_number' => true
     ];
 
     /**
