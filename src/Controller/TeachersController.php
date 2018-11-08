@@ -8,6 +8,10 @@ use PHPExcel_IOFactory;
 
 class TeachersController extends AppController
 {
+    public function initialize () {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
 
     public function beforeFilter(Event $event)
     {
@@ -15,7 +19,7 @@ class TeachersController extends AppController
         // ユーザーの登録とログアウトを許可します。
         // allow のリストに "login" アクションを追加しないでください。
         // そうすると AuthComponent の正常な機能に問題が発生します。
-        $this->Auth->allow(['add', 'logout']);
+        // $this->Auth->allow(['add', 'logout']);
     }
 
     public function index()
@@ -45,24 +49,38 @@ class TeachersController extends AppController
 
     }
 
-    public function login()
-    {
+/*    public function login() {
         $session = $this->request->session();
         if($this->request->is('post')){
-        if(isset($_POST['username'])){
-            $data = $this->Teachers->find('all')->where(['username' => $_POST['username']]);
-            foreach($data as $obj){
-                echo $obj->password;
-                if(strcmp($_POST['password'],$obj->password) == 0){
-                    $session->write('id',$obj->id);
-                    return $this->redirect('/att/home');
-
-                }else{
-                    //echo 'false';
+            if(isset($_POST['username'])){
+                $data = $this->Teachers->find('all')->where(['username' => $_POST['username']]);
+                foreach($data as $obj){
+                    echo $obj->password;
+                    if(strcmp($_POST['password'],$obj->password) == 0){
+                        $session->write('id',$obj->id);
+                        //return $this->redirect('/att/home');
+                    }else{
+                        //echo 'false';
+                    }
                 }
             }
         }
     }
+*/
+
+    public function login(){
+        if ($this->request->is('post')) {
+            echo $this->request->data['username'];
+            echo $this->request->data['password'];
+            echo '---------------';
+            $user = $this->Auth->identify();
+            echo $user;
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__('ユーザ名もしくはパスワードが間違っています'));
+        }
     }
 
     public function logout()

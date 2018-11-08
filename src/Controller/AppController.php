@@ -37,7 +37,7 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize()
+/*    public function initialize()
     {
 
         parent::initialize();
@@ -62,6 +62,38 @@ class AppController extends Controller
                 'home'
             ]
         ]);
+    }
+*/
+    public function initialize() {
+        parent::initialize();
+
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Flash');
+        $this->loadComponent('Auth', [
+            'loginAction' => [
+                'controller' => 'Teachers',
+                'action' => 'login'
+            ],
+            'loginRedirect' => [
+                'controller' => 'Att',
+                'action' => 'home'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Teachers',
+                'action' => 'login',
+                'home'
+            ],
+            'authenticate' => ['Form' => 
+                [
+                    'userModel' => 'Teachers',
+                    'fields' => ['username' => 'username', 'password' => 'password']
+                ]
+            ],
+        ]);
+    }
+
+    public function beforeFilter (Event $event) {
+        $this->Auth->allow();
     }
     
 
