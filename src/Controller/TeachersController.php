@@ -33,20 +33,24 @@ class TeachersController extends AppController
         $this->set(compact('teacher'));
     }
 
-    public function add()
-    {
-        $user = $this->Teachers->newEntity();
+    public function add(){
+        //エンティティ作成
+        $teacher = $this->Teachers->newEntity();
+        //値を受け取った時の処理
         if ($this->request->is('post')) {
-            // 3.4.0 より前は $this->request->data() が使われました。
-            $user = $this->Teachers->patchEntity($user, $this->request->getData());
-            if ($this->Teachers->save($user)) {
+            //値を受け取りテーブルの肩にはめる
+            $teacher = $this->Teachers->patchEntity($teacher, $this->request->getData());
+            //データの保存
+            if ($this->Teachers->save($teacher)) {
+                //成功した場合
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'add']);
+            }else{
+                //失敗した場合
+                $this->Flash->error(__('Unable to add the user.'));
             }
-            $this->Flash->error(__('Unable to add the user.'));
         }
-        $this->set('teacher', $user);
-
+        $this->set('teacher', $teacher);
     }
 
 /*    public function login() {
