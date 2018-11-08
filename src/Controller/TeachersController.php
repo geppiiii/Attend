@@ -6,8 +6,7 @@ use Cake\Event\Event;
 use PHPExcel_IOFactory;
 
 
-class TeachersController extends AppController
-{
+class TeachersController extends AppController {
     public function initialize () {
         parent::initialize();
         $this->loadComponent('RequestHandler');
