@@ -6,8 +6,8 @@
         <?= $this->Form->text('username') ?>
         パス
         <?= $this->Form->password('password') ?>
-        <!--Icカード
-        <?= $this->Form->text('icnum') ?>-->
+        Icカード
+        <?= $this->Form->text('ic_number') ?>
         <input type='hidden' name='role' value='admin' >
 
    </fieldset>
