@@ -6,6 +6,7 @@
         <?=$this->Form->text("username") ?>
         <?=$this->Form->password("password") ?>
     </fieldset>
+    <?=$this->Html->link('新規登録', '/Teachers/add',['class' => 'link']);?>
 <?= $this->Form->button(__('Login')); ?>
 <?= $this->Form->end() ?>
 </div>
