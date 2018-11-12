@@ -39,15 +39,15 @@
             ?>
             </div>
             <div class="col-md-3 dropdown dropright">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">欠席理由
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">欠席理由
                     <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <a class="dropdown-item">届け出欠席</a>
-                    <a class="dropdown-item">公欠</a>
-                    <a class="dropdown-item">休学</a>
-                    <a class="dropdown-item">謹慎</a>
-                    <a class="dropdown-item">出社</a>
+                    <a class="dropdown-item" value="届け出欠席">届け出欠席</a>
+                    <a class="dropdown-item" value="公欠">公欠</a>
+                    <a class="dropdown-item" value="休学">休学</a>
+                    <a class="dropdown-item" value="謹慎">謹慎</a>
+                    <a class="dropdown-item" value="出社">出社</a>
                 </div>
 
             </div>
@@ -81,10 +81,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
-$('.datepicker_start').datepicker();
-</script>
-<script>
-$('.datepicker_end').datepicker();
+    $(function(){
+        $('.datepicker_start').datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate: new Date(),
+            onSelect: function(selectedDate) {
+            var today   = new Date();
+            var selDate = new Date(selectedDate);
+            var msDiff = selDate.getTime() - today.getTime();
+            nx = Math.floor(msDiff / (1000 * 60 * 60 *24));
+            nx = nx+2;
+            var min = '+'+nx+'d';
+            $(".datepicker_end").datepicker("option", "minDate", min);
+            }
+
+        });
+        $('.datepicker_end').datepicker({ 
+            dateFormat: 'yy-mm-dd' 
+        });
+
+    });
 </script>
 <script>
     $(function(){

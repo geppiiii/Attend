@@ -107,7 +107,12 @@ class AttController extends AppController{
     }
     public function dailyOutput(){
         $this->attends = TableRegistry::get('attends');
-        $this->students = TableRegistry::get('students');
+		$this->students = TableRegistry::get('students');
+		// UNIX TIMESTAMPを取得
+		$timestamp = time();
+		//今日の日付セット
+		$this->set('date',date( "Y/m/d" , $timestamp ));
+
         $att_late = $this->attends->find('all',[
             'conditions'=>[
                 'all_situation =' => 2]]);
@@ -115,12 +120,11 @@ class AttController extends AppController{
             'conditions'=>[
                 'all_situation =' => 6
             ]
-        ]);
+		]);
         $this->set('att_late',$att_late);
         $this->set('abs',$abs);
         $name = $this->students->find('all');
         $this->set('name',$name);
-
 	}
 	
 	public function monthlyOutput(){
@@ -132,7 +136,14 @@ class AttController extends AppController{
         $this->set('name',$name);
 
     }
-
+	public function save(){
+		$Mdate= date("ymd");
+		$filename= $Mdate.".xlsx";
+		$filepath = "../../../tmp".$Mdate.".xlsx";
+		header("Content-Type: application/vnd.ms-excel");
+		header('Content-disposition: attachment; filename="'.$filename.'"');
+		readfile($filepath);
+	}	
 	public function updaterecord(){
 		//DB接続
 		$this->Attend = TableRegistry::get('Attends');
