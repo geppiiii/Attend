@@ -47,7 +47,7 @@
                 <?php endforeach;?>
             </div>
         </div>
-        <form action="save">
+        <form action="Dsave">
             <button type="submit">エクセルファイルのダウンロード</button>
         </form>
     </div>
