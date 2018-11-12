@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Teacher Entity
@@ -15,6 +16,11 @@ use Cake\ORM\Entity;
  */
 class Teacher extends Entity
 {
+    protected function _setPassword($password){
+      if (strlen($password) > 0) {
+        return (new DefaultPasswordHasher)->hash($password);
+      }
+    }
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

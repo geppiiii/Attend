@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use PHPExcel_IOFactory;
+use Cake\ORM\TableRegistry;
 
 
 class TeachersController extends AppController {
@@ -19,6 +20,19 @@ class TeachersController extends AppController {
         // allow のリストに "login" アクションを追加しないでください。
         // そうすると AuthComponent の正常な機能に問題が発生します。
         // $this->Auth->allow(['add', 'logout']);
+    }
+
+    public function addUser(){
+        $teachersTable = $this->getTableLocator()->get('Teachers');
+        if ($this->request->is('post')) {
+            $teacher = $teachersTable->newEntity();
+            $teacher->username = $this->request->data['username'];
+            $teacher->password = $this->request->data['password'];
+            $teacher->role = $this->request->data['role'];
+            $teacher->created = $this->request->data['created'];
+            $teacher->ic_number = $this->request->data['ic_number'];
+            $teachersTable->save($teacher);
+        }
     }
 
     public function index()
@@ -77,19 +91,19 @@ class TeachersController extends AppController {
             echo $this->request->data['password'];
             echo '---------------';
             $user = $this->Auth->identify();
-            echo $user;
             if ($user) {
                 $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('ユーザ名もしくはパスワードが間違っています'));
         }
     }
 
-    public function logout()
-    {
-        //return $this->redirect($this->Auth->logout());
+    public function logout() {
+        $logoutUrl = $this->Auth->logout();
+        $this->redirect($logoutUrl);
     }
+    
     public function qaz(){
 
     }
