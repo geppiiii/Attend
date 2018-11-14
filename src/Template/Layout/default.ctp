@@ -20,6 +20,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <head>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
@@ -60,7 +61,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <a class="nav-link" href="registry-student">生徒登録画面</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../Teachers/login">ログアウト</a>
+                    <a class="nav-link" href="next_daily_change">翌日欠席登録</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../teachers/logout">ログアウト</a>
                 </li>
             </ul>
         </div>

@@ -108,22 +108,42 @@ class AttController extends AppController{
   }
 
   public function registryStudent(){
+		$registrystudents = TableRegistry::get('students');
+		
+			if($this->request->is('post')){
 
-  }
+				$Rstudents = $registrystudents->newEntity();
+				$Rstudents->student_number = $this->request->data['inputNum'];
+				$Rstudents->student_name = $this->request->data['inputName'];
+				$Rstudents->department = $this->request->data['inputClass'];
+				$Rstudents->class = $this->request->data['inputClassA'];
+				$Rstudents->year = $this->request->data['inputYear'];
+				$Rstudents->attendance_number = $this->request->data['inputAttendnum'];
+				
+				if($registrystudents->save($Rstudents)) {	
+				}
+			}
+    }
+    public function dailyOutput(){
+        $this->attends = TableRegistry::get('attends');
+		$this->students = TableRegistry::get('students');
+		// UNIX TIMESTAMPを取得
+		$timestamp = time();
+		//今日の日付セット
+		$this->set('date',date( "Y/m/d" , $timestamp ));
 
-  public function dailyOutput(){
-    $this->attends = TableRegistry::get('attends');
-    $this->students = TableRegistry::get('students');
-    $att_late = $this->attends->find('all',['conditions'=>['all_situation =' => 2]]);
-    $abs = $this->attends->find('all',[
-      'conditions'=>[
-        'all_situation =' => 6
-      ]
-    ]);
-    $this->set('att_late',$att_late);
-    $this->set('abs',$abs);
-    $name = $this->students->find('all');
-    $this->set('name',$name);
+        $att_late = $this->attends->find('all',[
+            'conditions'=>[
+                'all_situation =' => 2]]);
+        $abs = $this->attends->find('all',[
+            'conditions'=>[
+                'all_situation =' => 6
+            ]
+		]);
+        $this->set('att_late',$att_late);
+        $this->set('abs',$abs);
+        $name = $this->students->find('all');
+        $this->set('name',$name);
 	}
 
 	public function monthlyOutput(){
@@ -222,7 +242,22 @@ class AttController extends AppController{
     $name = $this->students->find('all');
     $this->set('name',$name);
   }
-
+	public function Dsave(){
+		$Ddate= date("ymd");
+		$filename= $Ddate.".xlsx";
+		$filepath = "../../../tmp".$Ddate.".xlsx";
+		header("Content-Type: application/vnd.ms-excel");
+		header('Content-disposition: attachment; filename="'.$filename.'"');
+		readfile($filepath);
+	}
+	public function Msave(){
+		$Mdate = date("ym");
+		$filename = $Mdate.".xlsx";
+		$filepath = "../../../tmp".$Mdate.".xlsx";
+		header("Content-Type: application/vnd.ms-excel");
+		header('Content-disposition: attachment; filename="'.$filename.'"');
+		readfile($filepath);
+	}
 	public function updaterecord(){
 		//DB接続
 		$this->Attend = TableRegistry::get('Attends');

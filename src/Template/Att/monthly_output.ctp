@@ -9,10 +9,9 @@
 </head>
 
 <body>
-    <?=$this->Form->create($entity,['url'=>['action'=>'keisan']]) ?>
-    <div class="container mt-md-3">
-        <button type="submit" class="btn btn-primary" onclick="keisan()">月報出力を行う</button>
-    </div>
+    <form action="Msave">
+        <button type="submit">エクセルファイルのダウンロード</button>
+    </form>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
