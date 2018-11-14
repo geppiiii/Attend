@@ -109,6 +109,21 @@ class AttController extends AppController{
 
     public function registryStudent(){
 
+		$registrystudents = TableRegistry::get('students');
+		
+			if($this->request->is('post')){
+
+				$Rstudents = $registrystudents->newEntity();
+				$Rstudents->student_number = $this->request->data['inputNum'];
+				$Rstudents->student_name = $this->request->data['inputName'];
+				$Rstudents->department = $this->request->data['inputClass'];
+				$Rstudents->class = $this->request->data['inputClassA'];
+				$Rstudents->year = $this->request->data['inputYear'];
+				$Rstudents->attendance_number = $this->request->data['inputAttendnum'];
+				
+				if($registrystudents->save($Rstudents)) {	
+				}
+			}
     }
     public function dailyOutput(){
         $this->attends = TableRegistry::get('attends');
