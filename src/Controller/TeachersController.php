@@ -4,10 +4,14 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use PHPExcel_IOFactory;
+use Cake\ORM\TableRegistry;
 
 
-class TeachersController extends AppController
-{
+class TeachersController extends AppController {
+    public function initialize () {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
 
     public function beforeFilter(Event $event)
     {
@@ -15,7 +19,20 @@ class TeachersController extends AppController
         // ユーザーの登録とログアウトを許可します。
         // allow のリストに "login" アクションを追加しないでください。
         // そうすると AuthComponent の正常な機能に問題が発生します。
-        $this->Auth->allow(['add', 'logout']);
+        // $this->Auth->allow(['add', 'logout']);
+    }
+
+    public function addUser(){
+        $teachersTable = $this->getTableLocator()->get('Teachers');
+        if ($this->request->is('post')) {
+            $teacher = $teachersTable->newEntity();
+            $teacher->username = $this->request->data['username'];
+            $teacher->password = $this->request->data['password'];
+            $teacher->role = $this->request->data['role'];
+            $teacher->created = $this->request->data['created'];
+            $teacher->ic_number = $this->request->data['ic_number'];
+            $teachersTable->save($teacher);
+        }
     }
 
     public function index()
@@ -29,46 +46,64 @@ class TeachersController extends AppController
         $this->set(compact('teacher'));
     }
 
-    public function add()
-    {
-        $user = $this->Teachers->newEntity();
+    public function add(){
+        //エンティティ作成
+        $teacher = $this->Teachers->newEntity();
+        //値を受け取った時の処理
         if ($this->request->is('post')) {
-            // 3.4.0 より前は $this->request->data() が使われました。
-            $user = $this->Teachers->patchEntity($user, $this->request->getData());
-            if ($this->Teachers->save($user)) {
+            //値を受け取りテーブルの肩にはめる
+            $teacher = $this->Teachers->patchEntity($teacher, $this->request->getData());
+            //データの保存
+            if ($this->Teachers->save($teacher)) {
+                //成功した場合
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'add']);
+            }else{
+                //失敗した場合
+                $this->Flash->error(__('Unable to add the user.'));
             }
-            $this->Flash->error(__('Unable to add the user.'));
         }
-        $this->set('teacher', $user);
-
+        $this->set('teacher', $teacher);
     }
 
-    public function login()
-    {
+/*    public function login() {
         $session = $this->request->session();
         if($this->request->is('post')){
-        if(isset($_POST['username'])){
-            $data = $this->Teachers->find('all')->where(['username' => $_POST['username']]);
-            foreach($data as $obj){
-                echo $obj->password;
-                if(strcmp($_POST['password'],$obj->password) == 0){
-                    $session->write('id',$obj->id);
-                    return $this->redirect('/att/home');
-
-                }else{
-                    //echo 'false';
+            if(isset($_POST['username'])){
+                $data = $this->Teachers->find('all')->where(['username' => $_POST['username']]);
+                foreach($data as $obj){
+                    echo $obj->password;
+                    if(strcmp($_POST['password'],$obj->password) == 0){
+                        $session->write('id',$obj->id);
+                        //return $this->redirect('/att/home');
+                    }else{
+                        //echo 'false';
+                    }
                 }
             }
         }
     }
+*/
+
+    public function login(){
+        if ($this->request->is('post')) {
+            echo $this->request->data['username'];
+            echo $this->request->data['password'];
+            echo '---------------';
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__('ユーザ名もしくはパスワードが間違っています'));
+        }
     }
 
-    public function logout()
-    {
-        //return $this->redirect($this->Auth->logout());
+    public function logout() {
+        $logoutUrl = $this->Auth->logout();
+        $this->redirect($logoutUrl);
     }
+    
     public function qaz(){
 
     }

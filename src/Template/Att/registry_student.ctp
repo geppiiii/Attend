@@ -12,34 +12,19 @@
 
 <div class="container text-center"><h2>生徒登録</h2></div>
 <div class="container">
-    <form>
-        <div  class="form-group">
-            <label for="inputIcnum">カード番号</label>
-            <input type="text" class="form-control" id="inputIcnum" placeholder="カード番号">
-        </div>
-        <div  class="form-group">
-            <label for="inputNum">学籍番号</label>
-            <input type="text" class="form-control" id="inputNum" placeholder="学籍番号">
-        </div>
-        <div class="form-group">
-            <label for="inputName">名前</label>
-            <input type="text" class="form-control" id="inputName" placeholder="名前">
-        </div>
-        <div class="form-group">
-            <label for="inpuptClass">学科・クラス</label>
-            <input type="text" class="form-control" id="inputClass" placeholder="学科">
-            <input type="number" class="form-control" id="inputClassA" placeholder="クラス">
-        </div>
-        <div class="form-group">
-            <label for="inputYear">学年</label>
-            <input type="number" class="form-control" id="inputYear" placeholder="学年">
-        </div>
-        <div  class="form-group">
-            <label for="inputAttendnum">出席番号</label>
-            <input type="number" class="form-control" id="inputAttendnum" placeholder="出席番号">
-        </div>
-        <button type="submit text-center" class="btn btn-primary">登録</button>
-    </form>
+    <?=$this->Form->create(null,
+        ['type'=>'post','url'=>['controller'=>'Att','action'=>'registryStudent']]) ?>
+
+        <div class="input text"><label for="textbox">学籍番号</label><input type="text" name="inputNum" size="20" id="inputNum" /></div>
+        <div class="input text"><label for="textbox">名前</label><input type="text" name="inputName" size="20" id="inputName" /></div>
+        <div class="input text"><label for="textbox">学科</label><input type="text" name="inputClass" size="20" id="inputClass" /></div>
+        <div class="input text"><label for="textbox">クラス</label><input type="text" name="inputClassA" size="20" id="inputClassA" /></div>
+        <div class="input text"><label for="textbox">学年</label><input type="text" name="inputYear" size="20" id="inputYear" /></div>
+        <div class="input text"><label for="textbox">出席番号</label><input type="text" name="inputAttendnum" size="20" id="inputAttendnum" /></div>
+
+        <?=$this -> Form -> submit ( "登録");?>
+    <?=$this->Form->end(); ?>
+        
 </div>
     
 <script
