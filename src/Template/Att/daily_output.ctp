@@ -11,13 +11,12 @@
 <body>
 
     <div class="container mt-md-3">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>遅刻者</h4>
+        <fieldset>
+            <div class="container">
+                <legend>遅刻者</legend>
             </div>
-            <div class="col-md-8">
+            <div class="container">
                 <?php foreach($att_late as $obj):?>
-                <?= $obj->student_number?>
                 <?php foreach($name as $obj2):?>
                 <?php if(strcmp($obj->student_number,$obj2->student_number) == 0){
                     echo $obj2->student_name;
@@ -27,16 +26,15 @@
                 <br>
                 <?php endforeach;?>
             </div>
-        </div>
+        </fieldset>
     </div>
     <div class="container mt-md-3">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>欠席者</h4>
+        <fieldset>
+            <div class="container">
+                <legend>欠席者</legend>
             </div>
-            <div class="col-md-8">
+            <div class="container">
                 <?php foreach($abs as $obj):?>
-                <?= $obj->student_number?>
                 <?php foreach($name as $obj2):?>
                 <?php if(strcmp($obj->student_number,$obj2->student_number) == 0){
                     echo $obj2->student_name;
@@ -46,9 +44,16 @@
                 <br>
                 <?php endforeach;?>
             </div>
-        </div>
+        </fieldset>
+    </div>
+    <div class="container mt-md-3">
         <form action="Dsave">
-            <button type="submit">エクセルファイルのダウンロード</button>
+            <button type="submit">日報ファイルのダウンロード</button>
+        </form>
+    </div>
+    <div class="container mt-md-3">
+        <form action="Msave">
+            <button type="submit">月報ファイルのダウンロード</button>
         </form>
     </div>
     <!-- .xlsx -->

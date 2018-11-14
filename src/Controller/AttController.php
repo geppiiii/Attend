@@ -136,14 +136,22 @@ class AttController extends AppController{
         $this->set('name',$name);
 
     }
-	public function save(){
-		$Mdate= date("ymd");
-		$filename= $Mdate.".xlsx";
+	public function Dsave(){
+		$Ddate= date("ymd");
+		$filename= $Ddate.".xlsx";
+		$filepath = "../../../tmp".$Ddate.".xlsx";
+		header("Content-Type: application/vnd.ms-excel");
+		header('Content-disposition: attachment; filename="'.$filename.'"');
+		readfile($filepath);
+	}
+	public function Msave(){
+		$Mdate = date("ym");
+		$filename = $Mdate.".xlsx";
 		$filepath = "../../../tmp".$Mdate.".xlsx";
 		header("Content-Type: application/vnd.ms-excel");
 		header('Content-disposition: attachment; filename="'.$filename.'"');
 		readfile($filepath);
-	}	
+	}
 	public function updaterecord(){
 		//DB接続
 		$this->Attend = TableRegistry::get('Attends');
