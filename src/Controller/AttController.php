@@ -236,12 +236,24 @@ class AttController extends AppController{
   public function _ec($count){
   }
 
-  public function nextDailyChange(){
-    $this->attends = TableRegistry::get('attends');
-    $this->students = TableRegistry::get('students');
-    $name = $this->students->find('all');
-    $this->set('name',$name);
-  }
+	public function nextDailyChange(){
+		$this->attends = TableRegistry::get('Attends');
+		$this->students = TableRegistry::get('Students');
+		$absencesTable = TableRegistry::get('Absences');
+		$name = $this->students->find('all');
+		$this->set('name',$name);
+		if ($this->request->is('post')) {
+			$absence = $absencesTable->newEntity();
+			$absence->student_number = $this->request->data['student_number'];
+			$absence->absence_date_start = $this->dateArray($this->request->data['start']);
+			$absence->absence_date_end = $this->dateArray($this->request->data['end']);
+			$absence->state = $this->request->data['reason'];
+			if ($absencesTable->save($absence)) {
+				$this->redirect(['action'=>'nextDailyChange']);
+			}
+		}
+	}
+
 	public function Dsave(){
 		$Ddate= date("ymd");
 		$filename= $Ddate.".xlsx";
@@ -250,6 +262,7 @@ class AttController extends AppController{
 		header('Content-disposition: attachment; filename="'.$filename.'"');
 		readfile($filepath);
 	}
+
 	public function Msave(){
 		$Mdate = date("ym");
 		$filename = $Mdate.".xlsx";
@@ -258,6 +271,7 @@ class AttController extends AppController{
 		header('Content-disposition: attachment; filename="'.$filename.'"');
 		readfile($filepath);
 	}
+	
 	public function updaterecord(){
 		//DB接続
 		$this->Attend = TableRegistry::get('Attends');
@@ -289,5 +303,16 @@ class AttController extends AppController{
 		$Attend->save($data);
 		return $this->redirect('/att/home');
 	}
+
+	public function dateArray($array) {
+		$date = '';
+		foreach ($array as $obj) {
+			$date .= $obj;
+		}
+		$ymd = $date;
+		$str = date('Y-m-d',strtotime($ymd));
+		return $str;
+	}
+
 }
-?>
+
