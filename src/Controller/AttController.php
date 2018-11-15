@@ -23,11 +23,20 @@ class AttController extends AppController{
 		$this->Students = TableRegistry::get('Students');
 		$this->set('entity',$this->Attend->newEntity());
 		//欠席じゃなくてattend_timeに時間が入力されてないひと,['conditions'=>['attend_time'=> 空欄の人 ]]
-		$attend = $this->Attend->find('all',['conditions'=>['attend_time '=> "00:00:00"]]);
+    $student = $this->Students->find('all');
+    foreach ($student as $key) {
+      $key->student_number;
+    }
+		$attend = $this->Attend->find('all',['conditions'=>['attend_time '=> "00:00:00",'created' => date("Y-m-d", time())]]);
 		$this->set('attend',$attend);
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
 	}
+
+  //欠席じゃない生徒を取得
+  public function absence_date(){
+
+  }
 
     //授業中確認画面
   public function lessonconf(){
@@ -109,7 +118,7 @@ class AttController extends AppController{
 
   public function registryStudent(){
 		$registrystudents = TableRegistry::get('students');
-		
+
 			if($this->request->is('post')){
 
 				$Rstudents = $registrystudents->newEntity();
@@ -119,8 +128,8 @@ class AttController extends AppController{
 				$Rstudents->class = $this->request->data['inputClassA'];
 				$Rstudents->year = $this->request->data['inputYear'];
 				$Rstudents->attendance_number = $this->request->data['inputAttendnum'];
-				
-				if($registrystudents->save($Rstudents)) {	
+
+				if($registrystudents->save($Rstudents)) {
 				}
 			}
     }
@@ -271,7 +280,7 @@ class AttController extends AppController{
 		header('Content-disposition: attachment; filename="'.$filename.'"');
 		readfile($filepath);
 	}
-	
+
 	public function updaterecord(){
 		//DB接続
 		$this->Attend = TableRegistry::get('Attends');
@@ -315,4 +324,3 @@ class AttController extends AppController{
 	}
 
 }
-
