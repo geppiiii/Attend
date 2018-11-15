@@ -28,8 +28,8 @@ class TeachersController extends AppController {
             $teacher = $teachersTable->newEntity();
             $teacher->username = $this->request->data['username'];
             $teacher->password = $this->request->data['password'];
-            $teacher->role = $this->request->data['role'];
-            $teacher->created = $this->request->data['created'];
+            $teacher->role = 'admin';
+            //$teacher->created = $this->request->data['created'];
             $teacher->ic_number = $this->request->data['ic_number'];
             $teachersTable->save($teacher);
         }
@@ -103,26 +103,26 @@ class TeachersController extends AppController {
         $logoutUrl = $this->Auth->logout();
         $this->redirect($logoutUrl);
     }
-    
+
     public function qaz(){
 
     }
 
     public function download ( $id = "8" ){
- 
+
         // 入出力の情報設定
         $driPath    = realpath(TMP) . "/excel/";
-     
+
         $inputPath  = $driPath . "ttt.xlsx";
         $sheetName  = "Sheet1";
         $outputFile = "output_" . $id . ".xlsx";
         $outputPath = $driPath . $outputFile;
-     
+
         // Excalファイル作成
         $reader = PHPExcel_IOFactory::createReader('Excel2007');
         $book  = $reader->load($inputPath);
         $sheet  = $book->getSheetByName($sheetName);
-     
+
         // データを配置
         $sheet->setCellValue("A3","1601011");
         $sheet->setCellValue("B3","田島直人");
@@ -130,7 +130,7 @@ class TeachersController extends AppController {
         $sheet->setCellValue("B6",1);
         $sheet->setCellValue("B7","test");
         $sheet->setCellValue("B8","=B5+B6" );
-     
+
         // 保存
         $book->setActiveSheetIndex(0);
         $writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
@@ -146,11 +146,11 @@ class TeachersController extends AppController {
             ['',       14800, 1],
             ['Microsoft PowerPoint 2016', 15000, 1],
         ];
-        
+
         // テンプレート読み取り
         $book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース.xlsx');
         $sheet = $book->getActiveSheet();
-        
+
         // 編集
         $rowOffset = 3;
         foreach ($products as $row => $product) {
@@ -158,7 +158,7 @@ class TeachersController extends AppController {
                 $sheet->setCellValueByColumnAndRow($col+4, $row + $rowOffset, $value);
             }
         }
-        
+
         // 保存
         $writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
         $writer->save(realpath(TMP) . '/excel/出席トレース3.xlsx');
