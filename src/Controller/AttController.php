@@ -3,6 +3,7 @@ namespace App\Controller;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
+use PHPExcel_IOFactory;
 class AttController extends AppController{
     public function initialize(){
         parent::initialize();
@@ -321,6 +322,61 @@ class AttController extends AppController{
 		$ymd = $date;
 		$str = date('Y-m-d',strtotime($ymd));
 		return $str;
+	}
+
+	//日報出力
+	public function dailyreport(){
+		$toDay = date("d");
+		$i = 2;
+		$num = '';
+		$k = 'E';
+		for ($o = -1;$o < $toDay; $o++) {
+			$k++;
+		}
+		$this->attends = TableRegistry::get('attends');
+		$adata = $this->attends->find();
+		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース1.xlsx');
+		$sheet = $book->getActiveSheet();
+		foreach($adata as $obj){
+			$i++;
+			$num = $obj->all_situation;
+			$sheet->setCellValue($k.$i, $num);
+		}
+		$writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
+    $writer->save(realpath(TMP) . '/excel/出席トレース1.xlsx');
+		$Ddate= date("ymd");
+		$filename= $Ddate.".xlsx";
+		$filepath = realpath(TMP) . '/excel/出席トレース.xlsx';
+		header("Content-Type: application/vnd.ms-excel");
+		header('Content-disposition: attachment; filename="'.$filename.'"');
+		readfile($filepath);
+		$this->redirect(['action' => 'dailyOutput']);
+	}
+
+	//月報出力　遅刻1　遅刻+欠課2　欠席3　無届4
+	public function monthlyreport(){
+		$toDay = date("d");
+		$i = 2;
+		$num = '';
+		$k = 'E';
+		for ($o = -1;$o < $toDay; $o++) {
+			$k++;
+		}
+		$this->attends = TableRegistry::get('attends');
+		$adata = $this->attends->find();
+		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース1.xlsx');
+		$sheet = $book->getActiveSheet();
+		foreach($adata as $obj){
+			$i++;
+			$num = $obj->all_situation;
+			if($num=1){
+				$sheet->setCellValue($k.$i, $num);
+			}
+			$sheet->setCellValue($k.$i, $num);
+		}
+		$writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
+		$writer->save(realpath(TMP) . '/excel/出席トレース17.xlsx');
+		$this->redirect(['action' => 'dailyOutput']);
 	}
 
 }
