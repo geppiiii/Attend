@@ -240,7 +240,8 @@ class AttController extends AppController{
     echo $total['0000001']['4minashi'];
     echo $total['0000001']['minashi'];
     echo $total['0000001']['attended'];*/
-    //return $this->redirect('/att/home');
+		//return $this->redirect('/att/home');
+		return $total;
   }
 
   public function _ec($count){
@@ -355,27 +356,20 @@ class AttController extends AppController{
 
 	//月報出力　遅刻1　遅刻+欠課2　欠席3　無届4
 	public function monthlyreport(){
-		$toDay = date("d");
-		$i = 2;
-		$num = '';
-		$k = 'E';
-		for ($o = -1;$o < $toDay; $o++) {
-			$k++;
-		}
-		$this->attends = TableRegistry::get('attends');
-		$adata = $this->attends->find();
-		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース1.xlsx');
+		$i = 4;
+		$total = $this->keisan();
+		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/月別出席数.xlsx');
 		$sheet = $book->getActiveSheet();
-		foreach($adata as $obj){
+		foreach($total as $obj){
 			$i++;
-			$num = $obj->all_situation;
-			if($num=1){
-				$sheet->setCellValue($k.$i, $num);
-			}
-			$sheet->setCellValue($k.$i, $num);
+			$sheet->setCellValue('D'.$i, $obj['attended']);
+			$sheet->setCellValue('E'.$i, $obj['absence']);
+			$sheet->setCellValue('F'.$i, $obj['4minashi']);
+			$sheet->setCellValue('G'.$i, $obj['5minashi']);
+			$sheet->setCellValue('H'.$i, $obj['minashi']);
 		}
 		$writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
-		$writer->save(realpath(TMP) . '/excel/出席トレース17.xlsx');
+		$writer->save(realpath(TMP) . '/excel/月別出席数9.xlsx');
 		$this->redirect(['action' => 'dailyOutput']);
 	}
 
