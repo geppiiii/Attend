@@ -47,12 +47,14 @@
         </fieldset>
     </div>
     <div class="container mt-md-3">
-        <form action="Dsave">
+        <!-- Dsave -->
+        <form action="dailyreport">
             <button type="submit">日報ファイルのダウンロード</button>
         </form>
     </div>
     <div class="container mt-md-3">
-        <form action="Msave">
+        <!-- Msave -->
+        <form action="monthlyreport">
             <button type="submit">月報ファイルのダウンロード</button>
         </form>
     </div>
