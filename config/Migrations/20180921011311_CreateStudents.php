@@ -42,11 +42,6 @@ class CreateStudents extends AbstractMigration
         [
             'null' => false
         ]);
-        //クラス
-        $table->addColumn('class','string',
-        [
-            'null' => true
-        ]);
         $table->create();
     }
 }

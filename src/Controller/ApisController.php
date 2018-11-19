@@ -25,15 +25,56 @@ class ApisController extends AppController {
         //$this->response->body(json_encode($data));
     }
 
+    public function teacherCheck() {
+        $this->autoRender = false;
+        $teacher;
+        $data = ["BAD_REQUEST_CODE" => "404"];
+        $teachersTable = TableRegistry::get('Teachers');
+        if ($this->request->is('post')) {
+            $request = json_decode(file_get_contents('php://input'), true);
+            try {
+                $teacherResult = $teachersTable->find()->where(['ic_number' => $request['ic_number']]);
+                foreach ($teacherResult as $obj) {
+                    $teacher_id = $obj->id;
+                }
+                if($teachersTable->get($teacher_id)) {
+                    $data = ["NORMAL_REQUEST_CODE" => '200'];
+                }
+            } catch (Exception $e) {
+                $data = ["BAD_REQUEST_CODE" => "404"];
+            }
+        }
+        $this->response->body(json_encode($data));
+    }
+
+    public function teacherAdd() {
+        $this->autoRender = false;
+        $data = ["BAD_REQUEST_CODE" => "404"];
+        $teachersTable = TableRegistry::get('Teachers');
+        if ($this->request->is('post')) {
+            try {
+                $request = json_decode(file_get_contents('php://input'), true);
+                $teacher = $teachersTable->newEntity();
+                $teacher->username = $request['username'];
+                $teacher->ic_number = $request['ic_number'];
+                $teachersTable->save($teacher);
+                $data = ["NORMAL_REQUEST_CODE" => "200"];
+            } catch (Exception $e) {
+                $data = ["BAD_REQUEST_CODE" => "404"];
+            }
+        }
+        $this->response->body(json_encode($data));
+    }
+
     public function studentAdd () {
         $this->autoRender = false;
-        $studentsTable = TableRegistry::get('students');
+        $studentsTable = TableRegistry::get('Students');
         if ($this->request->is('post')) {
             try {
                 $request = json_decode(file_get_contents('php://input'), true);
                 $student = $studentsTable->newEntity();
-                $student->student_number = '00002';
-                $student->ic_number = 'admin6';
+                $student->student_number = $request['student_number'];
+                $student->ic_number = $request['ic_number'];
 
                 // $student->student_number = $request['student_number'];
                 // $studetn->ic_number = $request['ic_number'];
@@ -56,8 +97,8 @@ class ApisController extends AppController {
         $today = date("Y-m-d");
         $c_time = date("H:i:s");
         $data = [$request_code => $request_number];
-        $attendsTable = TableRegistry::get('attends');
-        $studentsTable = TableRegistry::get('students');
+        $attendsTable = TableRegistry::get('Attends');
+        $studentsTable = TableRegistry::get('Students');
         if ($this->request->is('post')) {
             $request_code = "NORMAL_REQUEST_CODE";
             $request = json_decode(file_get_contents('php://input'), true);

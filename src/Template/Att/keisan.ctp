@@ -9,9 +9,18 @@
 </head>
 
 <body>
-    <form action="Msave">
-        <button type="submit">エクセルファイルのダウンロード</button>
-    </form>
+  <!--<?php foreach($data as $obj): ?>
+    <?=$obj->student_number?>
+  <?php endforeach; ?>-->
+  学籍番号：0000002<br>
+  出席すべき日数：
+  <?= $total['0000002']['attend'] ?><br>
+  出席した日数：
+  <?= $total['0000002']['attended'] ?><br>
+  欠席日数：
+  <?= $total['0000002']['absence'] ?><br>
+  みなし欠席
+  <?= $total['0000002']['minashi'] ?><br>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
