@@ -126,10 +126,6 @@ class AttController extends AppController{
 		
 		
 	}
-
-  public function registryStudent(){
-  }
-
   public function registryStudent(){
 		$registrystudents = TableRegistry::get('students');
 
