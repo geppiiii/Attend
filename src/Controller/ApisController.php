@@ -101,12 +101,12 @@ class ApisController extends AppController {
 
         if ($this->request->is('post')) {
             $request = json_decode(file_get_contents('php://input'), true);
-            $ic_number = $request['id'];
+            $ic_number = $_POST['id'];
             // 朝ホームルーム開始前 sun:true 開始後 sun:false
             // 朝HR開始前:false, 開始後:true
             // 帰りHR 開始前:true, 開始後: false
-            $request_judge = $request['judge'];
-            $request_sun = $request['sun'];
+            $request_judge = $_POST['judge'];
+            $request_sun = $_POST['sun'];
             $students_result = $studentsTable->find()->select(['student_number'])->where(['ic_number'=>$ic_number]);
             foreach ($students_result as $result) {
                 $student_id = $result->student_number;
