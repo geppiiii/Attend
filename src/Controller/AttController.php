@@ -339,27 +339,33 @@ class AttController extends AppController{
 		$i = 2;
 		$num = '';
 		$k = 'E';
-		for ($o = -1;$o < $toDay; $o++) {
+		for ($o = 1;$o < $toDay; $o++) {
 			$k++;
 		}
 		$this->attends = TableRegistry::get('attends');
 		$adata = $this->attends->find();
-		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース1.xlsx');
+		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース.xlsx');
 		$sheet = $book->getActiveSheet();
 		foreach($adata as $obj){
 			$i++;
 			$num = $obj->all_situation;
 			$sheet->setCellValue($k.$i, $num);
 		}
+		//保存
 		$writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
-    $writer->save(realpath(TMP) . '/excel/出席トレース1.xlsx');
+		$writer->save(realpath(TMP) . '/excel/出席トレース1.xlsx');
+		//日付
 		$Ddate= date("ymd");
+		//ダウンロードさせるファイル名
 		$filename= $Ddate.".xlsx";
-		$filepath = realpath(TMP) . '/excel/出席トレース.xlsx';
+		$filepath = realpath(TMP) . '/excel/出席トレース1.xlsx';
+		//ダウンロードの指示
 		header("Content-Type: application/vnd.ms-excel");
-		header('Content-disposition: attachment; filename="'.$filename.'"');
+		//ダウンロードするファイル
+		header('Content-disposition: attachment; filename='.$filename.'');
 		readfile($filepath);
 		$this->redirect(['action' => 'dailyOutput']);
+		exit;
 	}
 
 	//月報出力　遅刻1　遅刻+欠課2　欠席3　無届4
