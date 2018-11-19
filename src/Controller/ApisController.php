@@ -7,12 +7,12 @@ use Cake\Routing\Dispatcher;
 use cake\ORM\TableRegistry;
 
 class ApisController extends AppController {
-    
+
     public function initialize () {
         parent::initialize();
         $this->Auth->allow(['add','student_add']);
         $this->loadComponent('RequestHandler');
-        
+
         $this->response->charset('UTF-8');
         $this->response->type('application/json');
         $this->response->type('json');
@@ -55,8 +55,8 @@ class ApisController extends AppController {
             try {
                 $request = json_decode(file_get_contents('php://input'), true);
                 $teacher = $teachersTable->newEntity();
-                $teacher->username = $request['username'];
-                $teacher->ic_number = $request['ic_number'];
+                $teacher->username = $_POST['username'];
+                $teacher->ic_number = $_POST['ic_number'];
                 $teachersTable->save($teacher);
                 $data = ["NORMAL_REQUEST_CODE" => "200"];
             } catch (Exception $e) {
@@ -73,11 +73,10 @@ class ApisController extends AppController {
             try {
                 $request = json_decode(file_get_contents('php://input'), true);
                 $student = $studentsTable->newEntity();
-                $student->student_number = $request['student_number'];
-                $student->ic_number = $request['ic_number'];
-
-                // $student->student_number = $request['student_number'];
-                // $studetn->ic_number = $request['ic_number'];
+                //$student->student_number = "1801442";
+                //$student->ic_number = "012E390824C439A3";
+                $student->student_number = $_POST['stnum'];
+                $student->ic_number = $_POST['id'];
                 $studentsTable->save($student);
                 $data = ["NORMAL_REQUEST_CODE" => "200"];
             } catch ( Exception $e ) {
@@ -100,12 +99,12 @@ class ApisController extends AppController {
         $attendsTable = TableRegistry::get('Attends');
         $studentsTable = TableRegistry::get('Students');
         if ($this->request->is('post')) {
-            $request_code = "NORMAL_REQUEST_CODE";
+
             $request = json_decode(file_get_contents('php://input'), true);
-            $ic_number = $request['id'];
+            $ic_number = $_POST['id'];
             // 朝HR開始前:true, 開始後:false
             // 帰りHR 開始前:true, 開始後: false
-            $request_judge = $request['judge'];
+            $request_judge = $_POST['judge'];
             $students_result = $studentsTable->find()->select(['student_number'])->where(['ic_number'=>$ic_number]);
             foreach ($students_result as $result) {
                 $student_id = $result->student_number;
@@ -117,7 +116,6 @@ class ApisController extends AppController {
             foreach($atte_result as $result) {
                 $atte_id = $result->id;
             }
-
             if (empty($atte_id)) {
                 $attend = $attendsTable->newEntity();
                 $attend->student_number = $student_id;
@@ -140,10 +138,10 @@ class ApisController extends AppController {
                 $attend->all_situation = 1;
                 $attendsTable->save($attend);
             }
+            $request_code = "NORMAL_REQUEST_CODE";
             $request_number = 200;
             $data = [$request_code => $request_number];
         }
         $this->response->body(json_encode($data));
     }
-
 }
