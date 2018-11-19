@@ -58,7 +58,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <a class="nav-link" href="monthly-output">月報出力画面</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="registry-student">生徒登録画面</a>
+                    <a class="nav-link" href="snumberlist">生徒登録画面</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="next_daily_change">翌日欠席登録</a>
