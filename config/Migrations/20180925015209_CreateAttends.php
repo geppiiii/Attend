@@ -26,7 +26,8 @@ class CreateAttends extends AbstractMigration
         // 間に合ったかどうか
         $table->addColumn('attend_state','integer',
         [
-            'null' => false
+            'null' => false,
+            'default' => '1'
         ]);
         // 帰りの時間
         $table->addColumn('leave_time','time',
@@ -34,9 +35,17 @@ class CreateAttends extends AbstractMigration
             'default' => '00:00:00'
         ]);
         // 帰りの時間が正規の時間かどうか
-        $table->addColumn('leave_state','integer');
+        $table->addColumn('leave_state','integer',
+        [
+          'null' => false,
+          'default' => '1'
+        ]);
         //最終判断
-        $table->addColumn('all_situation','integer');
+        $table->addColumn('all_situation','integer',
+        [
+          'null' => false,
+          'default' => '1'
+        ]);
         $table->addColumn('created', 'date');
         $table->create();
     }

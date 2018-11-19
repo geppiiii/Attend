@@ -46,44 +46,6 @@ class TeachersController extends AppController {
         $this->set(compact('teacher'));
     }
 
-    public function add(){
-        //エンティティ作成
-        $teacher = $this->Teachers->newEntity();
-        //値を受け取った時の処理
-        if ($this->request->is('post')) {
-            //値を受け取りテーブルの肩にはめる
-            $teacher = $this->Teachers->patchEntity($teacher, $this->request->getData());
-            //データの保存
-            if ($this->Teachers->save($teacher)) {
-                //成功した場合
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'add']);
-            }else{
-                //失敗した場合
-                $this->Flash->error(__('Unable to add the user.'));
-            }
-        }
-        $this->set('teacher', $teacher);
-    }
-
-/*    public function login() {
-        $session = $this->request->session();
-        if($this->request->is('post')){
-            if(isset($_POST['username'])){
-                $data = $this->Teachers->find('all')->where(['username' => $_POST['username']]);
-                foreach($data as $obj){
-                    echo $obj->password;
-                    if(strcmp($_POST['password'],$obj->password) == 0){
-                        $session->write('id',$obj->id);
-                        //return $this->redirect('/att/home');
-                    }else{
-                        //echo 'false';
-                    }
-                }
-            }
-        }
-    }
-*/
 
     public function login(){
         if ($this->request->is('post')) {
@@ -94,8 +56,9 @@ class TeachersController extends AppController {
             if ($user) {
                 $this->Auth->setUser($user);
                 $this->redirect($this->Auth->redirectUrl());
+            }else{
+                $this->Flash->error(__('ユーザ名もしくはパスワードが間違っています'));
             }
-            $this->Flash->error(__('ユーザ名もしくはパスワードが間違っています'));
         }
     }
 

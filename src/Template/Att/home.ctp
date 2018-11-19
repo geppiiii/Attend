@@ -46,9 +46,9 @@
           <?php endif; ?>
         <?php endforeach; ?>
       <?php endforeach; ?>
-
-      <button class="btn bg-primary" type="submit">更新</button>
+      <button class="btn bg-primary" type="submit">登録</button>
       <?=$this->Form->end(); ?>
+      <input type="button" class="btn bg-primary" style="color:white;" value="更新" onclick="window.location.reload();" />
 
       </script>
     </div>

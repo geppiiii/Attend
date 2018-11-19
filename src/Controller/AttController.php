@@ -63,7 +63,7 @@ class AttController extends AppController{
 			$kelesson = $this->request->data['kekka'];
 			$this->_lessonclerk($kelesson);
 		}
-		$end = $this->Student_Lesson->find('all');
+		$end = $this->Student_Lesson->find('all',['conditions'=>['month'=>date("m")]]);
 		$this->set('lesson',$end);
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
@@ -73,21 +73,21 @@ class AttController extends AppController{
   public function _lessonlate($lesson){
   	foreach ($lesson as $key) {
   		//送られてきた学籍番号に該当する人の検索
-  		$sdata = $this->Student_Lesson->find('all',['conditions'=>['student_number'=>$key]]);
+  		$sdata = $this->Student_Lesson->find('all',['conditions'=>['student_number'=>$key,'month'=>date("m")]]);
   		//選択された人分繰り返す
   		foreach ($sdata as $obj) {
-				$num = $obj->student_number;
+				$num = $obj->id;
   			$tikoku = $obj->lete + 1;
   			//更新処理
   			$this->_tikokuupdate($num,$tikoku);
   		}
 		}
   }
-    //授業中確認画面＿遅刻更新処理
+  //授業中確認画面＿遅刻更新処理
   public function _tikokuupdate($late,$tikoku){
-		$student_number = $late;
+		$id = $late;
 		$student_Lesson = TableRegistry::get('Student_Lessons');
-		$lesson = $student_Lesson->get($student_number);
+		$lesson = $student_Lesson->get($id);
 		$lesson->lete = $tikoku;
 		$student_Lesson->save($lesson);
 	}
@@ -96,10 +96,10 @@ class AttController extends AppController{
   public function _lessonclerk($kekka){
 		foreach ($kekka as $key) {
 			//送られてきた学籍番号に該当する人の検索
-			$sdata = $this->Student_Lesson->find('all',['conditions'=>['student_number'=>$key]]);
+			$sdata = $this->Student_Lesson->find('all',['conditions'=>['student_number'=>$key,'month'=>date("m")]]);
 			//選択された人分繰り返す
 			foreach ($sdata as $obj) {
-				$num = $obj->student_number;
+				$num = $obj->id;
 				$kekka = $obj->clerk + 1;
 				//更新処理
 				$this->_kekkaupdate($num,$kekka);
@@ -107,11 +107,12 @@ class AttController extends AppController{
 		}
   }
 
-    //授業中確認画面＿欠課更新処理
+  //授業中確認画面＿欠課更新処理
   public function _kekkaupdate($late,$tikoku){
+    $id= $late;
 		$student_number = $late;
 		$student_Lesson = TableRegistry::get('Student_Lessons');
-		$lesson = $student_Lesson->get($student_number);
+		$lesson = $student_Lesson->get($id);
 		$lesson->clerk = $tikoku;
 		$student_Lesson->save($lesson);
   }
@@ -133,26 +134,20 @@ class AttController extends AppController{
 				}
 			}
     }
-    public function dailyOutput(){
-        $this->attends = TableRegistry::get('attends');
+
+  public function dailyOutput(){
+    $this->attends = TableRegistry::get('attends');
 		$this->students = TableRegistry::get('students');
 		// UNIX TIMESTAMPを取得
 		$timestamp = time();
 		//今日の日付セット
 		$this->set('date',date( "Y/m/d" , $timestamp ));
-
-        $att_late = $this->attends->find('all',[
-            'conditions'=>[
-                'all_situation =' => 2]]);
-        $abs = $this->attends->find('all',[
-            'conditions'=>[
-                'all_situation =' => 6
-            ]
-		]);
-        $this->set('att_late',$att_late);
-        $this->set('abs',$abs);
-        $name = $this->students->find('all');
-        $this->set('name',$name);
+    $att_late = $this->attends->find('all',['conditions'=>['all_situation =' => 2]]);
+    $abs = $this->attends->find('all',['conditions'=>['all_situation =' => 6]]);
+    $this->set('att_late',$att_late);
+    $this->set('abs',$abs);
+    $name = $this->students->find('all');
+    $this->set('name',$name);
 	}
 
 	public function monthlyOutput(){
@@ -296,21 +291,24 @@ class AttController extends AppController{
 		}
 		//配列を繰り返し処理を行う
 		for($i = 0;$i<count($arys); $i++){
-			$this->_homeup($arys[$i],$aryc[$i]);
+      $attend = $this->Attend->find('all',['conditions'=>['student_number'=> $arys[$i],'created' => date("Y-m-d", time())]]);
+      foreach ($attend as $key) {
+        $this->_homeup($key->id,$aryc[$i]);
+      }
 		}
+    return $this->redirect('/att/home');
 	}
 
 	//選択された値を保存
-	public function _homeup($student,$joutai){
+	public function _homeup($id,$joutai){
 		//DBへ接続
 		$Attend = TableRegistry::get('Attends');
 		//渡された学籍番号を検索
-		$data = $Attend->get($student);
+		$data = $Attend->get($id);
 		//stateを渡された値へ変更
-		$data->attend_state = $joutai;
+    $data->attend_state = $joutai;
 		//変更された値を保存
 		$Attend->save($data);
-		return $this->redirect('/att/home');
 	}
 
 	public function dateArray($array) {
