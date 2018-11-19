@@ -98,13 +98,15 @@ class ApisController extends AppController {
         $data = [$request_code => $request_number];
         $attendsTable = TableRegistry::get('Attends');
         $studentsTable = TableRegistry::get('Students');
-        if ($this->request->is('post')) {
 
+        if ($this->request->is('post')) {
             $request = json_decode(file_get_contents('php://input'), true);
             $ic_number = $_POST['id'];
-            // 朝HR開始前:true, 開始後:false
+            // 朝ホームルーム開始前 sun:true 開始後 sun:false
+            // 朝HR開始前:false, 開始後:true
             // 帰りHR 開始前:true, 開始後: false
             $request_judge = $_POST['judge'];
+            $request_sun = $_POST['sun'];
             $students_result = $studentsTable->find()->select(['student_number'])->where(['ic_number'=>$ic_number]);
             foreach ($students_result as $result) {
                 $student_id = $result->student_number;
@@ -120,7 +122,7 @@ class ApisController extends AppController {
                 $attend = $attendsTable->newEntity();
                 $attend->student_number = $student_id;
                 $attend->attend_time = $c_time;
-                if ($request_judge) {
+                if (!$request_judge) {
                     $attend->attend_state = 1;
                 } else {
                     $attend->attend_state = 2;
@@ -128,14 +130,18 @@ class ApisController extends AppController {
                 $attend->created = $today;
                 $attendsTable->save($attend);
             } else {
-                $attend = $attendsTable->get($atte_id);
-                $attend->leave_time = $c_time;
-                if ($request_judge) {
+                if ($request_sun) {
+                    $attend = $attendsTable->get($atte_id);
+                    $attend->leave_time = $c_time;
                     $attend->leave_state = 3;
+                    $attend->all_situation = 3;
+                    $attendsTable->save($attend);
                 } else {
+                    $attend = $attendsTable->get($atte_id);
+                    $attend->leave_time = $c_time;
                     $attend->leave_state = 1;
+                    $attend->all_situation = 1;
                 }
-                $attend->all_situation = 1;
                 $attendsTable->save($attend);
             }
             $request_code = "NORMAL_REQUEST_CODE";
