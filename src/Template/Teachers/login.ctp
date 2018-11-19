@@ -17,14 +17,12 @@
     <p>IDとパスワードを入力してログインしてください。</p>
 </div>
 <div class="container mt-md-3">
-    <form>
     <div class="form-group">
         <?=$this->Form->text("username") ?>
     </div>
     <div class="form-group">
         <?=$this->Form->password("password") ?>
     </div>
-    </form>
 </div>
     <?=$this->Html->link('新規登録', '/Teachers/add_user',['class' => 'link']);?>
 <?= $this->Form->button(__('Login')); ?>
