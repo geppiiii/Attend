@@ -14,8 +14,9 @@
 <div class="container">
     <?=$this->Form->create(null,
         ['type'=>'post','url'=>['controller'=>'Att','action'=>'registryStudent']]) ?>
-
-        <div class="input text"><label for="textbox">学籍番号</label><input type="text" name="inputNum" size="20" id="inputNum" /></div>
+        <?=$this -> Form -> hidden ( "sid", [ "value" => $this->request->query('sid') ] );?>
+        <?=$this -> Form -> hidden ( "inputNum", [ "value" => $this->request->query('snumber') ] );?>
+        <div class="input text"><label for="textbox">学籍番号</label><p><?=$this->request->query('snumber')?></p></div>
         <div class="input text"><label for="textbox">名前</label><input type="text" name="inputName" size="20" id="inputName" /></div>
         <div class="input text"><label for="textbox">学科</label><input type="text" name="inputClass" size="20" id="inputClass" /></div>
         <div class="input text"><label for="textbox">クラス</label><input type="text" name="inputClassA" size="20" id="inputClassA" /></div>
