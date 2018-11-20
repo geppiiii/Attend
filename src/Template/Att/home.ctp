@@ -7,6 +7,9 @@
   </head>
   <body>
   <!-- 出席以外の表示 -->
+  <?=$this->Form->create('null',['url' => ['action' => 'momingdbCreate']]) ?>
+    <?=$this->Form->button('本日登校日') ?>
+  <?=$this->Form->end(); ?>
   <?=$this->Form->create($entity,['url'=>['action'=>'updaterecord']]) ?>
     <div class="container-fluid" style="margin-top:3%">
       <!-- カラム名 -->
@@ -49,8 +52,6 @@
       <button class="btn bg-primary" type="submit">登録</button>
       <?=$this->Form->end(); ?>
       <input type="button" class="btn bg-primary" style="color:white;" value="更新" onclick="window.location.reload();" />
-
-      </script>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

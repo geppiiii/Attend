@@ -16,7 +16,26 @@ class AttController extends AppController{
 	}
 
   public function index(){
-  }
+	}
+	
+	// 朝一DB登録
+	public function momingdbCreate () {
+		$attendsTable = TableRegistry::get('Attends');
+		$studentsTable = TableRegistry::get('Students');
+		$student = $studentsTable->find()->select(['student_number']);
+		foreach ($student as $obj) {
+			$attend = $attendsTable->newEntity();
+			$attend->student_number = $obj->student_number;
+			$attend->attend_time = '00:00:00';
+			$attend->attend_state = 0;
+			$attend->leave_time = '00:00:00';
+			$attend->leave_state = 0;
+			$attend->all_situation = 0;
+			$attend->created = date("Y-m-d");
+			$attendsTable->save($attend);
+		}
+		$this->redirect(['action'=>'home']);
+	}
 
     //HR確認画面
   public function home(){
@@ -116,7 +135,7 @@ class AttController extends AppController{
 		$lesson = $student_Lesson->get($id);
 		$lesson->clerk = $tikoku;
 		$student_Lesson->save($lesson);
-   }
+  }
 
 	public function snumberlist(){
 		$students = TableRegistry::get('students');
@@ -318,7 +337,8 @@ class AttController extends AppController{
 		//渡された学籍番号を検索
 		$data = $Attend->get($id);
 		//stateを渡された値へ変更
-    $data->attend_state = $joutai;
+		$data->attend_state = $joutai;
+		$data->attend_time = date("H:i:s");
 		//変更された値を保存
 		$Attend->save($data);
 	}
