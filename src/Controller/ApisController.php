@@ -95,6 +95,7 @@ class ApisController extends AppController {
         $atte_id = null;
         $today = date("Y-m-d");
         $c_time = date("H:i:s");
+        $atte_state;
         $data = [$request_code => $request_number];
         $attendsTable = TableRegistry::get('Attends');
         $studentsTable = TableRegistry::get('Students');
@@ -113,14 +114,15 @@ class ApisController extends AppController {
             }
             // $request_number = $student_id;
             $atte_result = $attendsTable->find()
-            ->where(['student_number'=>$student_id])
-            ->where(['created'=>$today]);
+                ->where(['student_number'=>$student_id])
+                ->where(['created'=>$today]);
             foreach($atte_result as $result) {
                 $atte_id = $result->id;
+                $atte_state = $result->attend_state;
+
             }
-            if (empty($atte_id)) {
-                $attend = $attendsTable->newEntity();
-                $attend->student_number = $student_id;
+            if ($atte_state == 0) {
+                $attend = $attendsTable->get($atte_id);
                 $attend->attend_time = $c_time;
                 if (!$request_judge) {
                     $attend->attend_state = 1;
