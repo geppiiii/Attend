@@ -62,7 +62,6 @@ class AttController extends AppController{
   public function lessonconf(){
 		$this->Student_Lesson = TableRegistry::get('Student_Lessons');
 		$this->Students = TableRegistry::get('Students');
-
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
 		$this->set('entity',$this->Student_Lesson->newEntity());
@@ -73,36 +72,38 @@ class AttController extends AppController{
 		//DB接続
 		$this->Students = TableRegistry::get('Students');
 		$this->Student_Lesson = TableRegistry::get('Student_Lessons');
-		//あたいの受け取り
-		if(isset($this->request->data['tikoku'])){
-			$tilesson = $this->request->data['tikoku'];
-			$this->_lessonlate($tilesson);
-		}
+    //生徒情報を取得
+    $student = $this->Students->find('all');
+    foreach ($student as $key) {
+      //渡された値から遅刻か欠課かを判断し学籍番号を別メソッドに引数として与える
+      if(isset($this->request->data[$key->student_number])){
+        if($this->request->data[$key->student_number] == "1"){
+          $this->_lessonlate($key->student_number);
+        }elseif ($this->request->data[$key->student_number] == "2") {
+          $this->_lessonclerk($key->student_number);
+        }
+      }
+    }
 
-		if(isset($this->request->data['kekka'])){
-			$kelesson = $this->request->data['kekka'];
-			$this->_lessonclerk($kelesson);
-		}
 		$end = $this->Student_Lesson->find('all',['conditions'=>['month'=>date("m")]]);
 		$this->set('lesson',$end);
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
 		$this->set('entity',$this->Student_Lesson->newEntity());
   }
+
   //授業中確認画面＿遅刻判定処理
   public function _lessonlate($lesson){
-  	foreach ($lesson as $key) {
-  		//送られてきた学籍番号に該当する人の検索
-  		$sdata = $this->Student_Lesson->find('all',['conditions'=>['student_number'=>$key,'month'=>date("m")]]);
-  		//選択された人分繰り返す
-  		foreach ($sdata as $obj) {
-				$num = $obj->id;
-  			$tikoku = $obj->lete + 1;
-  			//更新処理
-  			$this->_tikokuupdate($num,$tikoku);
-  		}
-		}
+    //送られてきた学籍番号に該当する人の検索
+  	$sdata = $this->Student_Lesson->find('all',['conditions'=>['student_number'=>$lesson,'month'=>date("m")]]);
+  	foreach ($sdata as $obj) {
+			$num = $obj->id;
+  		$tikoku = $obj->lete + 1;
+  		//更新処理
+  		$this->_tikokuupdate($num,$tikoku);
+  	}
   }
+
   //授業中確認画面＿遅刻更新処理
   public function _tikokuupdate($late,$tikoku){
 		$id = $late;
@@ -114,16 +115,14 @@ class AttController extends AppController{
 
     //授業中確認画面＿欠課判定処理
   public function _lessonclerk($kekka){
-		foreach ($kekka as $key) {
-			//送られてきた学籍番号に該当する人の検索
-			$sdata = $this->Student_Lesson->find('all',['conditions'=>['student_number'=>$key,'month'=>date("m")]]);
-			//選択された人分繰り返す
-			foreach ($sdata as $obj) {
-				$num = $obj->id;
-				$kekka = $obj->clerk + 1;
-				//更新処理
-				$this->_kekkaupdate($num,$kekka);
-			}
+		//送られてきた学籍番号に該当する人の検索
+		$sdata = $this->Student_Lesson->find('all',['conditions'=>['student_number'=>$kekka,'month'=>date("m")]]);
+		//選択された人分繰り返す
+		foreach ($sdata as $obj) {
+			$num = $obj->id;
+			$kekka = $obj->clerk + 1;
+			//更新処理
+			$this->_kekkaupdate($num,$kekka);
 		}
   }
 
