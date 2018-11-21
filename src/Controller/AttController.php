@@ -363,22 +363,22 @@ class AttController extends AppController{
 			$k++;
 		}
 		$this->attends = TableRegistry::get('attends');
-		$adata = $this->attends->find();
+		$adata = $this->attends->find()->where(['created' => date('y-m-d')]);
 		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース.xlsx');
 		$sheet = $book->getActiveSheet();
 		foreach($adata as $obj){
-			$i++;
-			$num = $obj->all_situation;
-			$sheet->setCellValue($k.$i, $num);
+				$i++;
+				$num = $obj->all_situation;
+				$sheet->setCellValue($k.$i, $num);
 		}
 		//保存
 		$writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
-		$writer->save(realpath(TMP) . '/excel/出席トレース1.xlsx');
+		$writer->save(realpath(TMP) . '/excel/出席トレース.xlsx');
 		//日付
 		$Ddate= date("ymd");
 		//ダウンロードさせるファイル名
 		$filename= $Ddate.".xlsx";
-		$filepath = realpath(TMP) . '/excel/出席トレース1.xlsx';
+		$filepath = realpath(TMP) . '/excel/出席トレース.xlsx';
 		//ダウンロードの指示
 		header("Content-Type: application/vnd.ms-excel");
 		//ダウンロードするファイル
