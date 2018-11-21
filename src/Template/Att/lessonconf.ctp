@@ -32,10 +32,11 @@
             </div>
             <!-- 授業状態 -->
             <div class="col-md-2 text-left">
-              <input type="checkbox" name='tikoku[]' value=<?=$obj->student_number?>>遅刻
+              <input type="radio" name= <?=$obj->student_number?> value='1'>遅刻
             </div>
             <div class="col-md-2 text-left">
-              <input type="checkbox" name='kekka[]' value=<?=$obj->student_number?>>欠課
+              <input type="radio" name= <?=$obj->student_number?> value='2'>欠課
+              <input type="radio" name= <?=$obj->student_number?> value="" checked="checked" style="display:none;" />
             </div>
           </div>
           <hr class="color:GRY">
