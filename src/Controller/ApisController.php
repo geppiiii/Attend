@@ -33,7 +33,7 @@ class ApisController extends AppController {
         if ($this->request->is('post')) {
             $request = json_decode(file_get_contents('php://input'), true);
             try {
-                $teacherResult = $teachersTable->find()->where(['ic_number' => $request['ic_number']]);
+                $teacherResult = $teachersTable->find()->where(['username' => $request['username']]);
                 foreach ($teacherResult as $obj) {
                     $teacher_id = $obj->id;
                 }
