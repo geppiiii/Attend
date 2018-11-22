@@ -13,7 +13,7 @@ class ChangeClassToStudents extends AbstractMigration
     public function change()
     {
         $table = $this->table('students');
-        $table->changeColumn('class', 'string', [
+        $table->addColumn('class', 'string', [
             'null' => true
         ]);
         $table->update();
