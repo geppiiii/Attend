@@ -8,9 +8,11 @@
   <body>
   <!-- 出席以外の表示 -->
   <?php
-    $test = $student;
+    $test = $Btn;
     if($test->count() == 26){
       $class = "hide";
+    }else{
+      $class = "";
     }
   ?>
 

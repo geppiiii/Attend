@@ -17,7 +17,7 @@ class AttController extends AppController{
 
   public function index(){
 	}
-	
+
 	// 朝一DB登録
 	public function momingdbCreate () {
 		$attendsTable = TableRegistry::get('Attends');
@@ -48,7 +48,9 @@ class AttController extends AppController{
       $key->student_number;
     }
 		$attend = $this->Attend->find('all',['conditions'=>['attend_time '=> "00:00:00",'created' => date("Y-m-d", time())]]);
+		$previewBtn = $this->Attend->find('all',['conditions'=>['created' => date("Y-m-d", time())]]);
 		$this->set('attend',$attend);
+		$this->set('Btn',$previewBtn);
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
 	}
