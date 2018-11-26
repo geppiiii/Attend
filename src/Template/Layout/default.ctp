@@ -88,9 +88,9 @@ $cakeDescription = 'GoogMoning';
       $('.nav-link').each(function(){
         var $href = $(this).attr('href');
         if(location.href.match($href)) {
-          $(this).addClass('link');
+          $(this).addClass('links');
         } else {
-          $(this).removeClass('link');
+          $(this).removeClass('links');
         }
       });
     });

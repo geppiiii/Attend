@@ -19,10 +19,11 @@ a {
     color: #15848F;
 }
 
-.link{
+.links{
   background-color:#424242 !important;
   margin-bottom: 0 !important;
   color:#ffffff!important;
+  font-weight: bold;
 }
 
 header {
