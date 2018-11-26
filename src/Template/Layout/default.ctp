@@ -63,7 +63,9 @@ $cakeDescription = 'GoogMoning';
                     <a class="nav-link" href="next_daily_change">翌日欠席登録</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../teachers/logout">ログアウト</a>
+                    <?php if ($this->request->session()->read('Auth.User')): ?>
+                        <a class="nav-link" href="logout">ログアウト</a>
+                    <?php endif; ?>
                 </li>
             </ul>
         </div>

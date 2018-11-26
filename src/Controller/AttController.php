@@ -52,6 +52,7 @@ class AttController extends AppController{
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
 	}
+	
 
   //欠席じゃない生徒を取得
   public function absence_date(){
@@ -358,7 +359,7 @@ class AttController extends AppController{
 		$i = 2;
 		$num = '';
 		$k = 'E';
-		for ($o = 1;$o < $toDay; $o++) {
+		for ($o = 0;$o < $toDay; $o++) {
 			$k++;
 		}
 		$this->attends = TableRegistry::get('attends');
@@ -404,6 +405,11 @@ class AttController extends AppController{
 		$writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
 		$writer->save(realpath(TMP) . '/excel/月別出席数9.xlsx');
 		$this->redirect(['action' => 'dailyOutput']);
+	}
+
+	public function logout() {
+		$logoutUrl = $this->Auth->logout();
+		$this->redirect($logoutUrl);
 	}
 
 }
