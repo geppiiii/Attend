@@ -44,7 +44,7 @@ $cakeDescription = 'GoogMoning';
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+        <?php if ($this->request->session()->read('Auth.User')): ?>
         <div class="collapse navbar-collapse" id="navbarsExample02">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -63,12 +63,11 @@ $cakeDescription = 'GoogMoning';
                     <a class="nav-link" href="next_daily_change">翌日欠席登録</a>
                 </li>
                 <li class="nav-item">
-                    <?php if ($this->request->session()->read('Auth.User')): ?>
-                        <a class="nav-link" href="logout">ログアウト</a>
-                    <?php endif; ?>
+                    <a class="nav-link" href="logout">ログアウト</a>
                 </li>
             </ul>
         </div>
+        <?php endif; ?>
     </nav>
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
