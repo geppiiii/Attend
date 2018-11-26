@@ -19,6 +19,12 @@ a {
     color: #15848F;
 }
 
+.link{
+  background-color:#424242 !important;
+  margin-bottom: 0 !important;
+  color:#ffffff!important;
+}
+
 header {
     background-color: #D33C44;
     color: #ffffff;

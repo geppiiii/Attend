@@ -20,6 +20,10 @@ $cakeDescription = 'GoogMoning';
 <!DOCTYPE html>
 <html>
 <head>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
@@ -37,8 +41,10 @@ $cakeDescription = 'GoogMoning';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
+
 </head>
-<body>
+<body onload="change();">
 <nav class="navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="#">出席管理システム</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +57,7 @@ $cakeDescription = 'GoogMoning';
                     <a class="nav-link" href="home">HR確認画面</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="lessonconf">授業中確認画面</a>
+                    <a class="nav-link " href="lessonconf" >授業中確認画面</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="daily_output">日報出力画面</a>
@@ -76,5 +82,19 @@ $cakeDescription = 'GoogMoning';
     </div>
     <footer>
     </footer>
+
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      $('.nav-link').each(function(){
+        var $href = $(this).attr('href');
+        if(location.href.match($href)) {
+          $(this).addClass('link');
+        } else {
+          $(this).removeClass('link');
+        }
+      });
+    });
+</script>
 </body>
 </html>
