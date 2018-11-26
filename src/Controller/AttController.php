@@ -51,7 +51,7 @@ class AttController extends AppController{
 		$previewBtn = $this->Attend->find('all',['conditions'=>['created' => date("Y-m-d", time())]]);
 		$this->set('attend',$attend);
 		$this->set('Btn',$previewBtn);
-		$student = $this->Students->find('all');
+		$student = $this->Students->find('all')->order(['Students.attendance_number' => 'ASC']);
 		$this->set('student',$student);
 	}
 	
@@ -65,7 +65,7 @@ class AttController extends AppController{
   public function lessonconf(){
 		$this->Student_Lesson = TableRegistry::get('Student_Lessons');
 		$this->Students = TableRegistry::get('Students');
-		$student = $this->Students->find('all');
+		$student = $this->Students->find('all')->order(['Students.attendance_number' => 'ASC']);
 		$this->set('student',$student);
 		$this->set('entity',$this->Student_Lesson->newEntity());
   }
