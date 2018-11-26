@@ -80,8 +80,7 @@ class AppController extends Controller
             ],
             'logoutRedirect' => [
                 'controller' => 'Teachers',
-                'action' => 'login',
-                'home'
+                'action' => 'login'
             ],
             'authenticate' => ['Form' => 
                 [
@@ -93,7 +92,7 @@ class AppController extends Controller
     }
 
     public function beforeFilter (Event $event) {
-        $this->Auth->allow();
+        $this->Auth->allow(['login']);
     }
     
 

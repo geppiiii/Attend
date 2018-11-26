@@ -19,7 +19,7 @@ class TeachersController extends AppController {
         // ユーザーの登録とログアウトを許可します。
         // allow のリストに "login" アクションを追加しないでください。
         // そうすると AuthComponent の正常な機能に問題が発生します。
-        // $this->Auth->allow(['add', 'logout']);
+        $this->Auth->allow(['add', 'logout']);
     }
 
     public function addUser(){
@@ -58,13 +58,9 @@ class TeachersController extends AppController {
                 $this->redirect($this->Auth->redirectUrl());
             }else{
                 $this->Flash->error(__('ユーザ名もしくはパスワードが間違っています'));
+                $this->redirect(['action'=>'login']);
             }
         }
-    }
-
-    public function logout() {
-        $logoutUrl = $this->Auth->logout();
-        $this->redirect($logoutUrl);
     }
 
     public function qaz(){
