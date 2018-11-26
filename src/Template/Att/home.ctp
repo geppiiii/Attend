@@ -7,8 +7,15 @@
   </head>
   <body>
   <!-- 出席以外の表示 -->
+  <?php
+    $test = $student;
+    if($test->count() == 26){
+      $class = "hide";
+    }
+  ?>
+
   <?=$this->Form->create('null',['url' => ['action' => 'momingdbCreate']]) ?>
-    <?=$this->Form->button('本日登校日') ?>
+    <?=$this->Form->button('本日登校日',['id'=>'Btn','class'=> $class])?>
   <?=$this->Form->end(); ?>
   <?=$this->Form->create($entity,['url'=>['action'=>'updaterecord']]) ?>
     <div class="container-fluid" style="margin-top:3%">
@@ -53,6 +60,8 @@
       <?=$this->Form->end(); ?>
       <input type="button" class="btn bg-primary" style="color:white;" value="更新" onclick="window.location.reload();" />
     </div>
+    <script src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous">
@@ -65,6 +74,15 @@
           visibleItem.text($(this).attr('value'));
         });
       });
+        //隠すボタンをクリックしたらバナーを隠す
+      $('#Btn').click(function() {
+        $('#Btn').hide();
+        $.cookie('bnrRead', 'on', { //cookieにbnrReadという名前でonという値をセット
+            expires: 1, //cookieの有効日数
+            path:'/' //有効にするパス
+          });
+        });
     </script>
+
   </body>
 </html>
