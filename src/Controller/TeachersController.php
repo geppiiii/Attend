@@ -19,7 +19,7 @@ class TeachersController extends AppController {
         // ユーザーの登録とログアウトを許可します。
         // allow のリストに "login" アクションを追加しないでください。
         // そうすると AuthComponent の正常な機能に問題が発生します。
-        $this->Auth->allow(['add', 'logout']);
+        $this->Auth->allow(['add', 'logout','addUser']);
     }
 
     public function addUser(){
