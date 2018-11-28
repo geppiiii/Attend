@@ -54,7 +54,7 @@ class AttController extends AppController{
 		$student = $this->Students->find('all')->order(['Students.attendance_number' => 'ASC']);
 		$this->set('student',$student);
 	}
-	
+
 
   //欠席じゃない生徒を取得
   public function absence_date(){
@@ -174,8 +174,8 @@ class AttController extends AppController{
 		$timestamp = time();
 		//今日の日付セット
 		$this->set('date',date( "Y/m/d" , $timestamp ));
-    $att_late = $this->attends->find('all',['conditions'=>['all_situation =' => 2]]);
-    $abs = $this->attends->find('all',['conditions'=>['all_situation =' => 6]]);
+    $att_late = $this->attends->find('all',['conditions'=>['all_situation =' => 2,'created'=>date("Y-m-d", time())]]);
+    $abs = $this->attends->find('all',['conditions'=>['all_situation =' => 6,'created'=>date("Y-m-d", time())]]);
     $this->set('att_late',$att_late);
     $this->set('abs',$abs);
     $name = $this->students->find('all');
