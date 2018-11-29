@@ -189,9 +189,10 @@ class AttController extends AppController{
     $this->students = TableRegistry::get('students');
     $this->student_lessons = TableRegistry::get('Student_lessons');
     //今月のデータを取得
-    $sdata = $this->attends->find('all',['conditions'=>['created like'=>date("Y-m", time())."%"]]);
+		$sdata = $this->attends->find('all',['conditions'=>['created like'=>date("Y-m", time())."%"]]);
     $student = $this->students->find('all');
-    $lesson = $this->student_lessons->find('all',['conditions'=>['month'=>date("m", time())]]);
+		$lesson = $this->student_lessons->find('all',['conditions'=>['month'=>date("m", time())]]);
+
     //生徒数分の配列を作成
     foreach ($student as $key) {
       //出席すべき日数
@@ -251,20 +252,109 @@ class AttController extends AppController{
 
     }
     //$kaeri = $this->_ec($total);
-    $total['0000001']['syussekiritu'] = $total['0000001']['attended'] / $total['0000001']['attend'];
+    //$total['0000001']['syussekiritu'] = $total['0000001']['attended'] / $total['0000001']['attend'];
     $this->set('total',$total);
     //echo $kaeri;
     //出席関係確認echo
-    /*echo $total['0000001']['attended'] / $total['0000001']['attend'];
+    /*echo $total['0000001']['attended'] / $total['0000001']['attend'];*/
+    echo $total['1801661']['attend'];
+    echo $total['1801661']['absence'];
+    echo $total['1801661']['5minashi'];
+    echo $total['1801661']['4minashi'];
+    echo $total['1801661']['minashi'];
+    echo $total['1801661']['attended'];
+		//return $this->redirect('/att/home');
+		return $total;
+	}
+	public function Ykeisan(){
+		//DB接続
+    $this->attends = TableRegistry::get('attends');
+    $this->students = TableRegistry::get('students');
+		$this->student_lessons = TableRegistry::get('Student_lessons');
+		//今年度の今月までのデータを取得
+		$todaymonth = date("m");
+		$todayyear = date("Y");
+		if($todaymonth <= 3){
+			$sdata = $this->attends->find('all')->where(['created >= '=>($todayyear-1)."04-01"]);
+		}else{
+			$sdata = $this->attends->find('all')->where(['created >= '=>$todayyear."-04-01"]);
+		}
+    $student = $this->students->find('all');
+		$lesson = $this->student_lessons->find('all');
+		//生徒数分の配列を作成
+    foreach ($student as $key) {
+      //出席すべき日数
+      $total[$key->student_number]['attend'] = 0;
+      //出席した日数
+      $total[$key->student_number]['attended'] = 0;
+      //欠席日数
+      $total[$key->student_number]['absence'] = 0;
+      //欠課回数
+      $total[$key->student_number]['4minashi'] = 0;
+      //遅刻、早退、授業遅刻回数
+      $total[$key->student_number]['5minashi'] = 0;
+      //みなし欠席
+      $total[$key->student_number]['minashi'] = 0;
+		}
+    //配列に登校すべき日数を追加
+    foreach ($sdata as $value) {
+      if ($value->all_situation != 9) {
+        if ($value->all_situation != 10) {
+          if ($value->all_situation != 12) {
+						$total[$value->student_number]['attend'] = $total[$value->student_number]['attend'] + 1;
+          }
+        }
+      }
+      //欠席日数を追加
+      //届出欠席
+      if ($value->all_situation == 7) {
+				$total[$value->student_number]['absence'] = $total[$value->student_number]['absence'] + 1;
+      }
+      //無届け欠席
+      if ($value->all_situation == 8) {
+        $total[$value->student_number]['absence'] = $total[$value->student_number]['absence'] + 1;
+      }
+      //謹慎
+      if ($value->all_situation == 11) {
+        $total[$value->student_number]['absence'] = $total[$value->student_number]['absence'] + 1;
+      }
+      //５回みなし欠席
+      //HR遅刻
+      if ($value->attend_state == 2) {
+        $total[$value->student_number]['5minashi'] = $total[$value->student_number]['5minashi'] + 1;
+      }
+      //早退
+      if ($value->leave_state == 3) {
+        $total[$value->student_number]['5minashi'] = $total[$value->student_number]['5minashi'] + 1;
+      }
+    }
+    foreach ($lesson as $obj) {
+      $total[$obj->student_number]['5minashi'] = $total[$obj->student_number]['5minashi'] + $obj->lete;
+      $total[$obj->student_number]['4minashi'] = $total[$obj->student_number]['4minashi'] + $obj->clerk;
+    }
+    foreach ($student as $key) {
+      //出席すべき日数
+      $total[$key->student_number]['minashi'] = $total[$key->student_number]['minashi'] + floor($total[$key->student_number]['5minashi'] / 5);
+      $total[$key->student_number]['minashi'] = $total[$key->student_number]['minashi'] + floor($total[$key->student_number]['4minashi'] / 4);
+      $total[$key->student_number]['attended'] = $total[$key->student_number]['attend'] - $total[$key->student_number]['absence'] - $total[$key->student_number]['minashi'];
+
+    }
+    //$kaeri = $this->_ec($total);
+   // $total['0000001']['syussekiritu'] = $total['0000001']['attended'] / $total['0000001']['attend'];
+    $this->set('total',$total);
+    //echo $kaeri;
+    //出席関係確認echo
+    //echo $total['0000001']['attended'] / $total['0000001']['attend'];
     echo $total['0000001']['attend'];
     echo $total['0000001']['absence'];
     echo $total['0000001']['5minashi'];
     echo $total['0000001']['4minashi'];
     echo $total['0000001']['minashi'];
-    echo $total['0000001']['attended'];*/
+    echo $total['0000001']['attended'];
 		//return $this->redirect('/att/home');
 		return $total;
-  }
+
+	}
 
   public function _ec($count){
   }
