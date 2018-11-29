@@ -50,6 +50,11 @@
                     <option selected value="2">遅刻</option>
                     <option value="4">遅延</option>
                     <option value="1">名札忘れ</option>
+                    <option value="7">欠席</option>
+                    <option value="9">公欠</option>
+                    <option value="10">休学</option>
+                    <option value="11">謹慎</option>
+                    <option value="12">出社</option>
                   </select>
                 </div>
               </div>

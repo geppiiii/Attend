@@ -42,26 +42,22 @@ class AttController extends AppController{
     $this->Attend = TableRegistry::get('Attends');
 		$this->Students = TableRegistry::get('Students');
 		$this->set('entity',$this->Attend->newEntity());
-		//欠席じゃなくてattend_timeに時間が入力されてないひと,['conditions'=>['attend_time'=> 空欄の人 ]]
-    $student = $this->Students->find('all');
-    foreach ($student as $key) {
-      $key->student_number;
-    }
-		$attend = $this->Attend->find('all',['conditions'=>['attend_time '=> "00:00:00",'created' => date("Y-m-d", time())]]);
-		$previewBtn = $this->Attend->find('all',['conditions'=>['created' => date("Y-m-d", time())]]);
-		$this->set('attend',$attend);
+    //今日の登校時間がまだ入力されていない人を検索
+		$attend = $this->Attend->find('all',['conditions'=>['attend_state' => "0",'attend_time '=> "00:00:00",'created' => date("Y-m-d", time())]]);
+    //欠席者の生徒番号を検索しattendテーブルのall_situationに登録
+    $this->set('attend',$attend);
+    $previewBtn = $this->Attend->find('all',['conditions'=>['created' => date("Y-m-d", time())]]);
 		$this->set('Btn',$previewBtn);
 		$student = $this->Students->find('all')->order(['Students.attendance_number' => 'ASC']);
 		$this->set('student',$student);
 	}
-
 
   //欠席じゃない生徒を取得
   public function absence_date(){
 
   }
 
-    //授業中確認画面
+  //授業中確認画面
   public function lessonconf(){
 		$this->Student_Lesson = TableRegistry::get('Student_Lessons');
 		$this->Students = TableRegistry::get('Students');
@@ -175,7 +171,7 @@ class AttController extends AppController{
 		//今日の日付セット
 		$this->set('date',date( "Y/m/d" , $timestamp ));
     $att_late = $this->attends->find('all',['conditions'=>['all_situation =' => 2,'created'=>date("Y-m-d", time())]]);
-    $abs = $this->attends->find('all',['conditions'=>['all_situation =' => 6,'created'=>date("Y-m-d", time())]]);
+    $abs = $this->attends->find('all',['conditions'=>['all_situation >=' => 6,'created'=>date("Y-m-d", time())]]);
     $this->set('att_late',$att_late);
     $this->set('abs',$abs);
     $name = $this->students->find('all');
@@ -340,7 +336,11 @@ class AttController extends AppController{
 		$data = $Attend->get($id);
 		//stateを渡された値へ変更
 		$data->attend_state = $joutai;
-		$data->attend_time = date("H:i:s");
+    $data->all_situation = $joutai;
+    if ($joutai == 1) {
+      date_default_timezone_set('Asia/Tokyo');
+  		$data->attend_time = date("H:i:s");
+    }
 		//変更された値を保存
 		$Attend->save($data);
 	}
@@ -354,9 +354,28 @@ class AttController extends AppController{
 		$str = date('Y-m-d',strtotime($ymd));
 		return $str;
 	}
+  
+  //無届欠席の判定
+  public function _mutodoke(){
+    //DBへ接続
+		$Attend = TableRegistry::get('Attends');
+    $this->Attend = TableRegistry::get('Attends');
+    $ketu = $this->Attend->find('all',['conditions'=>['created' => date("Y-m-d", time())]]);
+    foreach ($ketu as $key) {
+      if ($key->attend_state == 2) {
+        if ($key->leave_state == 0) {
+          $data = $Attend->get($key->id);
+          $data->all_situation = '8';
+          $Attend->save($data);
+        }
+      }
+    }
+    $this->redirect(['action'=>'home']);
+  }
 
 	//日報出力
 	public function dailyreport(){
+    $this->_mutodoke();
 		$toDay = date("d");
 		$i = 2;
 		$num = '';
