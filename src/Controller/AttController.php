@@ -84,7 +84,7 @@ class AttController extends AppController{
       }
     }
 
-		$end = $this->Student_Lesson->find('all',['conditions'=>['month'=>date("m")]]);
+		$end = $this->Student_Lesson->find()->where(['month'=>date("m")]);
 		$this->set('lesson',$end);
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
