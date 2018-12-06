@@ -48,22 +48,33 @@
     </div>
     <div class="container mt-md-3">
         <!-- Dsave -->
-        <form action="dailyreport">
-            <button type="submit">日報ファイルのダウンロード</button>
-        </form>
+        <?=$this->Form->create(null,['url'=>['action'=>'dailyreport']]) ?>
+            <?=$this->Form->button("日報ファイルのダウンロード",["class" => "daily"]) ?>
+        <?=$this->Form->end() ?>
     </div>
     <div class="container mt-md-3">
         <!-- Msave -->
-        <form action="monthlyreport">
-            <button type="submit">月報ファイルのダウンロード</button>
-        </form>
+        <?=$this->Form->create(null,['url'=>['action'=>'monthlyreport']]) ?>
+            <?=$this->Form->button("月報ファイルのダウンロード",["class" => "monthly"]) ?>
+        <?=$this->Form->end() ?>
     </div>
     <!-- .xlsx -->
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+<script>
+	$('.daily').click(function(){
+		if(!confirm('本日の出欠を締め切ります大丈夫ですか？')){
+			/* キャンセルの時の処理 */
+			return false;
+		}
+	});
+  $('.monthly').click(function(){
+		if(!confirm('現在作成中ですので完成をお待ちください')){
+			/* キャンセルの時の処理 */
+			return false;
+		}else{
+      return false;
+    }
+	});
+</script>
 </body>
 
 </html>
