@@ -503,7 +503,7 @@ class AttController extends AppController{
 		}
 		$adata = $this->attends->find()->where(['created' => date('y-m-d')]);
 		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース.xlsx');
-		$sheet = $book->getActiveSheet();
+		$sheet = $book->getSheetByName($toMonth . "月");
 		foreach($adata as $obj){
 				$i++;
 				$num = $obj->all_situation;
