@@ -1,8 +1,12 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-
-class AtudentsTable extends Table{
-
+use Cake\Validation\Validator;
+class AttendsTable extends Table{
+  public function validationDefault(Validator $validator){
+        
+  }
 }

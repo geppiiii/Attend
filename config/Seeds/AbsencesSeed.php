@@ -21,8 +21,9 @@ class AbsencesSeed extends AbstractSeed
         $data = [
             [
                 'student_number' => '0000001',
-                'absence_date'=> '2018-11-11',
-                'reason' => 'インターンシップに行くため'
+                'absence_date_start'=> '2018-11-11',
+                'absence_date_end' => '2018-11-12',
+                'state' => '1'
             ]
         ];
 

@@ -84,7 +84,7 @@ class AttController extends AppController{
       }
     }
 
-		$end = $this->Student_Lesson->find('all',['conditions'=>['month'=>date("m")]]);
+		$end = $this->Student_Lesson->find()->where(['month'=>date("m")]);
 		$this->set('lesson',$end);
 		$student = $this->Students->find('all');
 		$this->set('student',$student);
@@ -464,21 +464,26 @@ class AttController extends AppController{
 
 	//日報出力
 	public function dailyreport(){
-		$this->_mutodoke();
+		$this->attends = TableRegistry::get('attends');
+    $this->_mutodoke();
 		$toDay = date("d");
+		$toMonth = date("m");
 		$i = 2;
 		$num = '';
 		$k = 'E';
-		for ($o = 0;$o < $toDay; $o++) {
+		for ($o = 1;$o < $toDay; $o++) {
 			$k++;
 		}
-		$this->attends = TableRegistry::get('attends');
 		$adata = $this->attends->find()->where(['created' => date('y-m-d')]);
 		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース.xlsx');
 		$sheet = $book->getActiveSheet();
 		foreach($adata as $obj){
 				$i++;
 				$num = $obj->all_situation;
+				if ($num == 0){
+					$num = "";
+				}
+				$sheet->getStyle( $k.$i )->getFill()->setFillType('PHPExcel_Style_Fill::FILL_SOLID')->getStartColor()->setRGB('FFFFFF');
 				$sheet->setCellValue($k.$i, $num);
 		}
 		//保存

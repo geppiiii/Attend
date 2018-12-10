@@ -20,28 +20,32 @@ class DecisionsSeed extends AbstractSeed
     {
         $data = [
             [
-                'judge_number' => 1,
-                'description' => '正常'
+                'judge_number' => 0,
+                'description' => '出席'
             ],
             [
-                'judge_number' => 2,
+                'judge_number' => 1,
                 'description' => '遅刻'
             ],
             [
-                'judge_number' => 3,
-                'description' => '早退'
-            ],
-            [
-                'judge_number' => 4,
-                'description' => '遅延'
-            ],
-            [
-                'judge_number' => 5,
+                'judge_number' => 2,
                 'description' => '欠課'
             ],
             [
-                'judge_number' => 6,
+                'judge_number' => 3,
                 'description' => '欠席'
+            ],
+            [
+                'judge_number' => 4,
+                'description' => '無欠'
+            ],
+            [
+                'judge_number' => 5,
+                'description' => '早退'
+            ],
+            [
+                'judge_number' => 6,
+                'description' => '遅延'
             ],
             [
                 'judge_number' => 7,
@@ -49,22 +53,18 @@ class DecisionsSeed extends AbstractSeed
             ],
             [
                 'judge_number' => 8,
-                'description' => '無欠'
-            ],
-            [
-                'judge_number' => 9,
                 'description' => '公欠'
             ],
             [
-                'judge_number' => 10,
+                'judge_number' => 9,
                 'description' => '休学'
             ],
             [
-                'judge_number' => 11,
+                'judge_number' => 10,
                 'description' => '謹慎'
             ],
             [
-                'judge_number' => 12,
+                'judge_number' => 11,
                 'description' => '出社'
             ]
         ];
