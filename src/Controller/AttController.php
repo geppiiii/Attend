@@ -175,7 +175,8 @@ class AttController extends AppController{
     $this->set('att_late',$att_late);
     $this->set('abs',$abs);
     $name = $this->students->find('all');
-    $this->set('name',$name);
+		$this->set('name',$name);
+		$this->set('rate', $this->_attendancerate());
 	}
 
 	public function monthlyOutput(){
@@ -340,22 +341,45 @@ class AttController extends AppController{
 
     }
     //$kaeri = $this->_ec($total);
-   // $total['0000001']['syussekiritu'] = $total['0000001']['attended'] / $total['0000001']['attend'];
-    //$this->set('total',$total);
+    // $total['0000001']['syussekiritu'] = $total['0000001']['attended'] / $total['0000001']['attend'];
+    $this->set('total',$total);
+
     //echo $kaeri;
     //出席関係確認echo
     //echo $total['0000001']['attended'] / $total['0000001']['attend'];
-    echo $total['0000001']['attend'];
+    /*echo $total['0000001']['attend'];
     echo $total['0000001']['absence'];
     echo $total['0000001']['5minashi'];
     echo $total['0000001']['4minashi'];
     echo $total['0000001']['minashi'];
-    echo $total['0000001']['attended'];
+    echo $total['0000001']['attended'];*/
 		//return $this->redirect('/att/home');
-		return $total;
+		return $total; //年間の出席時間
+	}
+
+	//年間の出席率
+	public function _attendancerate(){
+		$this->students = TableRegistry::get('Students');
+		$Rate = $this->Ykeisan();
+		$test = array();
+		$data = $this->students->find('all');
+		foreach($data as $obj){
+			$student_rate = 10 - ($Rate[$obj->student_number]['absence'] + $Rate[$obj->student_number]['minashi']);
+			if($student_rate == 10){
+				$Ydata = 1;
+			}else{
+				$Ydata = $student_rate / 10;
+			}
+			if(0.95 > $Ydata){
+				$test[$obj->student_number]['name'] = $obj->student_name;
+				$test[$obj->student_number]['ritu'] = $Ydata;
+			}
+		}
+		return $test;
 	}
 
   public function _ec($count){
+
   }
 
 	public function nextDailyChange(){
@@ -443,7 +467,7 @@ class AttController extends AppController{
 		$str = date('Y-m-d',strtotime($ymd));
 		return $str;
 	}
-  
+
   //無届欠席の判定
   public function _mutodoke(){
     //DBへ接続
