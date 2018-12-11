@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 <title>出席管理システム</title>
@@ -9,13 +8,10 @@
 </head>
 
 <body>
-
-    <div class="container mt-md-3">
+    <div class="container m-3">
         <fieldset>
             <div class="container">
                 <legend>遅刻者</legend>
-            </div>
-            <div class="container">
                 <?php foreach($att_late as $obj):?>
                 <?php foreach($name as $obj2):?>
                 <?php if(strcmp($obj->student_number,$obj2->student_number) == 0){
@@ -28,12 +24,10 @@
             </div>
         </fieldset>
     </div>
-    <div class="container mt-md-3">
+    <div class="container m-3">
         <fieldset>
             <div class="container">
                 <legend>欠席者</legend>
-            </div>
-            <div class="container">
                 <?php foreach($abs as $obj):?>
                 <?php foreach($name as $obj2):?>
                 <?php if(strcmp($obj->student_number,$obj2->student_number) == 0){
@@ -46,13 +40,37 @@
             </div>
         </fieldset>
     </div>
-    <div class="container mt-md-3">
+
+    <div class="container m-3">
+        <fieldset>
+            <div class="container">
+                <legend>出席率警告者</legend>
+                <?php foreach($rate as $value):?>
+                    <div class="row m-1">
+                        <div class="col-md-2">
+                            <?php
+                                echo $value['name'];
+                            ?>
+                        </div>
+                        <div class="col-md-2">
+                            <?php
+                                $a = ($value['ritu'] * 100)."%";
+                                echo $a;
+                            ?>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="container m-3">
         <!-- Dsave -->
         <?=$this->Form->create(null,['url'=>['action'=>'dailyreport']]) ?>
             <?=$this->Form->button("日報ファイルのダウンロード",["class" => "daily"]) ?>
         <?=$this->Form->end() ?>
     </div>
-    <div class="container mt-md-3">
+    <div class="container m-3">
         <!-- Msave -->
         <?=$this->Form->create(null,['url'=>['action'=>'monthlyreport']]) ?>
             <?=$this->Form->button("月報ファイルのダウンロード",["class" => "monthly"]) ?>
