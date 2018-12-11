@@ -254,7 +254,7 @@ class AttController extends AppController{
     }
     //$kaeri = $this->_ec($total);
     //$total['0000001']['syussekiritu'] = $total['0000001']['attended'] / $total['0000001']['attend'];
-    $this->set('total',$total);
+    //$this->set('total',$total);
     //echo $kaeri;
     //出席関係確認echo
     /*echo $total['0000001']['attended'] / $total['0000001']['attend'];*/
@@ -343,6 +343,7 @@ class AttController extends AppController{
     //$kaeri = $this->_ec($total);
     // $total['0000001']['syussekiritu'] = $total['0000001']['attended'] / $total['0000001']['attend'];
     $this->set('total',$total);
+
     //echo $kaeri;
     //出席関係確認echo
     //echo $total['0000001']['attended'] / $total['0000001']['attend'];
@@ -524,25 +525,57 @@ class AttController extends AppController{
 		readfile($filepath);
 		$this->redirect(['action' => 'dailyOutput']);
 		exit;
-	}
+	
+		}
 
 	//月報出力　遅刻1　遅刻+欠課2　欠席3　無届4
 	public function monthlyreport(){
 		$i = 4;
 		$total = $this->keisan();
+		//excelテンプレート読み込み
 		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/月別出席数.xlsx');
 		$sheet = $book->getActiveSheet();
 		foreach($total as $obj){
 			$i++;
+			//出席日数
 			$sheet->setCellValue('D'.$i, $obj['attended']);
-			$sheet->setCellValue('E'.$i, $obj['absence']);
-			$sheet->setCellValue('F'.$i, $obj['4minashi']);
-			$sheet->setCellValue('G'.$i, $obj['5minashi']);
-			$sheet->setCellValue('H'.$i, $obj['minashi']);
-		}
+			//公欠
+			$sheet->setCellValue('E'.$i, $obj['attend']);
+			//届欠
+			$sheet->setCellValue('F'.$i, $obj['absence']);
+			//無欠
+			$sheet->setCellValue('G'.$i, $obj['absence']);
+			//欠課
+			$sheet->setCellValue('H'.$i, $obj['4minashi']);
+			//遅刻
+			$sheet->setCellValue('I'.$i, $obj['5minashi']);
+			//早退
+			$sheet->setCellValue('J'.$i, $obj['5minashi']);
+			//授業
+			$sheet->setCellValue('K'.$i, $obj['5minashi']);
+			//休学
+			$sheet->setCellValue('L'.$i, $obj['attend']);
+			//みなし
+			$sheet->setCellValue('M'.$i, $obj['minashi']);
+			//出席率
+			$sheet->setCellValue('N'.$i, $obj['attend']/$obj['attended']*100);
+		}	
+		//保存
 		$writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
-		$writer->save(realpath(TMP) . '/excel/月別出席数9.xlsx');
+		$writer->save(realpath(TMP) . '/excel/月別出席数1.xlsx');
+		//日付
+		$Mdate = date("ym");
+		//ダウンロードさせるファイル名
+		$filename = $Mdate.".xlsx";
+		$filepath = realpath(TMP) . '/excel/月別出席数1.xlsx';
+		//ダウンロードの指示
+		header("Content-Type: application/vnd.ms-excel");
+		//ダウンロードするファイル
+		header('Content-disposition: attachment; filename='.$filename.'');
+		ob_end_clean();
+		readfile($filepath);
 		$this->redirect(['action' => 'dailyOutput']);
+		exit;
 	}
 
 	public function logout() {

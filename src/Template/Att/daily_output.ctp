@@ -85,12 +85,10 @@
 		}
 	});
   $('.monthly').click(function(){
-		if(!confirm('現在作成中ですので完成をお待ちください')){
+		if(!confirm('完成しましたので遠慮なく押してください')){
 			/* キャンセルの時の処理 */
 			return false;
-		}else{
-      return false;
-    }
+		}
 	});
 </script>
 </body>
