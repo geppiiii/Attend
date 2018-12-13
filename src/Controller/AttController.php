@@ -470,15 +470,18 @@ class AttController extends AppController{
 
   //無届欠席の判定
   public function _mutodoke(){
-    //DBへ接続
+		//DBへ接続
+		$decisionsTable = TableRegistry::get('Decisions');
+		$decision = $decisionsTable->find()->where(['description' => '遅刻'])->orWhere(['description' => '無欠'])->orWhere(['description' => '出席'])->toArray();
+
 		$Attend = TableRegistry::get('Attends');
     $this->Attend = TableRegistry::get('Attends');
     $ketu = $this->Attend->find('all',['conditions'=>['created' => date("Y-m-d", time())]]);
     foreach ($ketu as $key) {
-      if ($key->attend_state == 2) {
-        if ($key->leave_state == 0) {
+      if ($key->attend_state == $decision[0]['judge_number']) {
+        if ($key->leave_state == $decision[2]['judge_number']) {
           $data = $Attend->get($key->id);
-          $data->all_situation = '8';
+          $data->all_situation = $decision[1]['judge_number'];
           $Attend->save($data);
         }
       }
@@ -582,5 +585,4 @@ class AttController extends AppController{
 		$logoutUrl = $this->Auth->logout();
 		$this->redirect($logoutUrl);
 	}
-
 }

@@ -85,10 +85,10 @@ $cakeDescription = 'GoogMoning';
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
     $(function(){
-      $('.nav-link').each(function(){
+    $('.nav-link').each(function(){
         var $href = $(this).attr('href');
         if(location.href.match($href)) {
-          $(this).addClass('links');
+        	$(this).addClass('links');
         } else {
           $(this).removeClass('links');
         }
