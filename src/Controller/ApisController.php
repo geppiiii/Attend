@@ -99,6 +99,8 @@ class ApisController extends AppController {
         $data = [$request_code => $request_number];
         $attendsTable = TableRegistry::get('Attends');
         $studentsTable = TableRegistry::get('Students');
+        $decisionsTable = TableRegistry::get('Decisions');
+		
 
         if ($this->request->is('post')) {
             $request = json_decode(file_get_contents('php://input'), true);
@@ -125,24 +127,28 @@ class ApisController extends AppController {
                 $attend = $attendsTable->get($atte_id);
                 $attend->attend_time = $c_time;
                 if (!$request_judge) {
-                    $attend->attend_state = 1;
+                    $decisions = $decisionsTable->find()->where(['description' => '出席'])->toArray();
+                    $attend->attend_state = $decisions[0]['judge_number'];
                 } else {
-                    $attend->attend_state = 2;
+                    $decisions = $decisionsTable->find()->where(['description' => '遅刻 '])->toArray();
+                    $attend->attend_state = $decisions[0]['judge_number'];
                 }
                 $attend->created = $today;
                 $attendsTable->save($attend);
             } else {
                 if ($request_sun) {
+                    $decisions = $decisionsTable->find()->where(['description' => '早退'])->toArray();
                     $attend = $attendsTable->get($atte_id);
                     $attend->leave_time = $c_time;
-                    $attend->leave_state = 3;
-                    $attend->all_situation = 3;
+                    $attend->leave_state = $decisions[0]['judge_number'];
+                    $attend->all_situation = $decisions[0]['judge_number'];
                     $attendsTable->save($attend);
                 } else {
+                    $decisions = $decisionsTable->find()->where(['description' => '出席'])->toArray();
                     $attend = $attendsTable->get($atte_id);
                     $attend->leave_time = $c_time;
-                    $attend->leave_state = 1;
-                    $attend->all_situation = 1;
+                    $attend->leave_state = $decisions[0]['judge_number'];
+                    $attend->all_situation = $decisions[0]['judge_number'];
                 }
                 $attendsTable->save($attend);
             }
