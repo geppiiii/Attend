@@ -136,7 +136,7 @@ class ApisController extends AppController {
                 $attend->created = $today;
                 $attendsTable->save($attend);
             } else {
-                if ($request_sun) {
+                if (!$request_sun) {
                     $decisions = $decisionsTable->find()->where(['description' => '早退'])->toArray();
                     $attend = $attendsTable->get($atte_id);
                     $attend->leave_time = $c_time;
