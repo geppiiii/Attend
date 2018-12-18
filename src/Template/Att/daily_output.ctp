@@ -84,7 +84,7 @@
 			return false;
 		}
 	});
-  $('.monthly').click(function(){
+	$('.monthly').click(function(){
 		if(!confirm('完成しましたので遠慮なく押してください')){
 			/* キャンセルの時の処理 */
 			return false;

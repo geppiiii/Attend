@@ -213,7 +213,7 @@ class AttController extends AppController{
     foreach ($sdata as $value) {
       if ($value->all_situation != 9) {
         if ($value->all_situation != 10) {
-          if ($value->all_situation != 12) {
+          if ($value->all_situation != 11) {
             $total[$value->student_number]['attend'] = $total[$value->student_number]['attend'] + 1;
           }
         }
@@ -301,7 +301,7 @@ class AttController extends AppController{
     foreach ($sdata as $value) {
       if ($value->all_situation != 9) {
         if ($value->all_situation != 10) {
-          if ($value->all_situation != 12) {
+          if ($value->all_situation != 11) {
 						$total[$value->student_number]['attend'] = $total[$value->student_number]['attend'] + 1;
           }
         }
@@ -501,7 +501,11 @@ class AttController extends AppController{
 		for ($o = 1;$o < $toDay; $o++) {
 			$k++;
 		}
-		$adata = $this->attends->find()->where(['created' => date('y-m-d')]);
+		$adata = $this->Attend->find()
+			->where(["created" => date('y-m-d')])
+			->order(["attendance_number" => "ASC"])
+			->contain(['Students'])->all();
+		// $adata = $this->attends->find()->where(['created' => date('y-m-d')]);
 		$book = PHPExcel_IOFactory::load(realpath(TMP) . '/excel/出席トレース.xlsx');
 		$sheet = $book->getSheetByName($toMonth . "月");
 		foreach($adata as $obj){
